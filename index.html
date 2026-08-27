@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKIFIT - Protótipos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090A0C;
+      --card-bg: #121418;
+      --card-border: #1E2228;
+      --green-primary: #A3E635;
+      --green-hover: #84CC16;
+      --text-white: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-dark: #000000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-white); }
+    h1 span { color: var(--green-primary); }
+    p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .link-item:hover {
+      border-color: var(--green-primary);
+      background-color: rgba(163, 230, 53, 0.05);
+    }
+    .link-item span { color: var(--green-primary); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fit<span>Perto</span></h1>
+    <p>Selecione abaixo o protótipo do Requisito Funcional desejado:</p>
+    
+    <div class="list">
+      <!-- Ajuste o caminho da pasta conforme estiver no seu repositório -->
+      <a href="./src/prototipos/SEMANA-01/RF01/" class="link-item">
+        RF01 - Home / Início <span>Acessar →</span>
+      </a>
+      <a href="./src/prototipos/SEMANA-01/RF02 - Login/" class="link-item">
+        RF02 - Login <span>Acessar →</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
