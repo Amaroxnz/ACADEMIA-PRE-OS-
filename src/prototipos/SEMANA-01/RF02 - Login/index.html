@@ -1,1 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitPerto - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
+  <style>
+    /* Tirando as margens padrão do navegador */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #090A0C;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif; /* Fonte do projeto */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container-tudo {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      flex-grow: 1;
+    }
+
+    /* PARTE DA ESQUERDA (IMAGEM) */
+    .caixa-esquerda {
+      width: 50%;
+      background-image: linear-gradient(135deg, rgba(9, 10, 12, 0.85) 0%, rgba(9, 10, 12, 0.95) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-marca {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .logo-marca i {
+      color: #A3E635;
+      margin-right: 10px;
+    }
+
+    .textos-banner {
+      margin-top: 150px;
+      max-width: 500px;
+    }
+
+    .titulo-grande {
+      font-size: 55px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .verde {
+      color: #A3E635;
+    }
+
+    .subtitulo {
+      color: #94A3B8;
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    .caixa-dos-icones {
+      display: flex;
+      background-color: rgba(18, 20, 24, 0.6);
+      border: 1px solid #1E2228;
+      border-radius: 12px;
+      padding: 20px;
+      gap: 15px;
+    }
+
+    .icone-item {
+      width: 33%;
+    }
+
+    .icone-item i {
+      color: #A3E635;
+      margin-bottom: 10px;
+    }
+
+    .icone-titulo {
+      font-weight: bold;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .icone-texto {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    /* PARTE DA DIREITA (FORMULARIO) */
+    .caixa-direita {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quadrado-login {
+      background-color: #121418;
+      border: 1px solid #1E2228;
+      border-radius: 16px;
+      padding: 40px;
+      width: 440px;
+    }
+
+    .titulo-form {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .titulo-form h2 {
+      font-size: 28px;
+    }
+
+    .titulo-form p {
+      color: #94A3B8;
+      margin-top: 10px;
+    }
+
+    .grupo-input {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .grupo-input label {
+      display: block;
+      margin-bottom: 5px;
+      color: #D1D5DB;
+      font-size: 14px;
+    }
+
+    .input-com-icone {
+      position: relative;
+    }
+
+    .icone-input {
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      color: #94A3B8;
+    }
+
+    .icone-olho {
+      position: absolute;
+      right: 15px;
+      top: 12px;
+      color: #94A3B8;
+    }
+
+    .meu-input {
+      width: 100%;
+      padding: 12px;
+      padding-left: 45px; /* espaco pro icone */
+      background-color: #0D0F12;
+      border: 1px solid #22272E;
+      border-radius: 8px;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .esqueceu-senha {
+      float: right;
+      color: #A3E635;
+      font-size: 13px;
+      text-decoration: none;
+      margin-top: 5px;
+    }
+
+    .botao-entrar {
+      width: 100%;
+      background-color: #A3E635;
+      color: black;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 30px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .linha-ou {
+      text-align: center;
+      color: #94A3B8;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .botao-google {
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid #22272E;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .botao-google svg {
+      margin-right: 10px;
+    }
+
+    .cadastrar-link {
+      text-align: center;
+      margin-top: 30px;
+      color: #94A3B8;
+      font-size: 14px;
+    }
+
+    .cadastrar-link a {
+      color: #A3E635;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* RODAPE COM ESTATISTICAS */
+    .meu-rodape {
+      background-color: #050607;
+      border-top: 1px solid #1E2228;
+      padding: 25px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .estatistica-box {
+      display: flex;
+      align-items: center;
+    }
+
+    .estatistica-box i {
+      color: #A3E635;
+      margin-right: 15px;
+    }
+
+    .numero-est {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .texto-est {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    /* celular */
+    @media (max-width: 900px) {
+      .container-tudo {
+        flex-direction: column;
+      }
+      .caixa-esquerda, .caixa-direita {
+        width: 100%;
+      }
+      .caixa-dos-icones {
+        flex-direction: column;
+      }
+      .icone-item {
+        width: 100%;
+      }
+      .meu-rodape {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DIV PRINCIPAL DA PAGINA -->
+  <div class="container-tudo">
+    
+    <!-- LADO DA FOTO -->
+    <div class="caixa-esquerda">
+      <div class="logo-marca">
+        <i data-lucide="map-pin"></i>
+        <span>FitPerto</span>
+      </div>
+
+      <div class="textos-banner">
+        <h1 class="titulo-grande">
+          Encontre academias <span class="verde">perto de você.</span>
+        </h1>
+        <p class="subtitulo">
+          Descubra academias incríveis na sua região, compare preços, avaliações e comece hoje mesmo sua jornada.
+        </p>
+
+        <!-- CAIXA DOS TRES ICONES -->
+        <div class="caixa-dos-icones">
+          <div class="icone-item">
+            <i data-lucide="map-pin"></i>
+            <span class="icone-titulo">Perto de você</span>
+            <span class="icone-texto">Encontre academias na sua região</span>
+          </div>
+          <div class="icone-item">
+            <i data-lucide="star"></i>
+            <span class="icone-titulo">Compare</span>
+            <span class="icone-texto">Veja avaliações, preços e modalidades</span>
+          </div>
+          <div class="icone-item">
+            <i data-lucide="zap"></i>
+            <span class="icone-titulo">Comece hoje</span>
+            <span class="icone-texto">Escolha e comece sua jornada</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LADO DO LOGIN -->
+    <div class="caixa-direita">
+      <div class="quadrado-login">
+        <div class="titulo-form">
+          <h2>Bem-vindo de volta!</h2>
+          <p>Faça login para continuar sua jornada.</p>
+        </div>
+
+        <!-- comeco do formulario -->
+        <form>
+          <div class="grupo-input">
+            <label>E-mail</label>
+            <div class="input-com-icone">
+              <i data-lucide="mail" class="icone-input"></i>
+              <input type="email" class="meu-input" placeholder="seu@email.com">
+            </div>
+          </div>
+
+          <div class="grupo-input">
+            <label>Senha</label>
+            <div class="input-com-icone">
+              <i data-lucide="lock" class="icone-input"></i>
+              <input type="password" class="meu-input" placeholder="Sua senha">
+              <i data-lucide="eye-off" class="icone-olho"></i>
+            </div>
+            <a href="#" class="esqueceu-senha">Esqueceu sua senha?</a>
+            <div style="clear: both;"></div> <!-- arrumando o float do link -->
+          </div>
+
+          <button type="button" class="botao-entrar">Entrar</button>
+        </form>
+
+        <div class="linha-ou">
+          - - - - ou - - - -
+        </div>
+
+        <button class="botao-google">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 10.8 0 12.5s.7 2.8 1.9 5.2l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.3-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z"/>
+          </svg>
+          Entrar com Google
+        </button>
+
+        <p class="cadastrar-link">
+          Ainda não tem uma conta? <a href="#">Cadastre-se</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPE DOS NUMEROS -->
+  <div class="meu-rodape">
+    <div class="estatistica-box">
+      <i data-lucide="building-2"></i>
+      <div>
+        <p class="numero-est">+2.500</p>
+        <p class="texto-est">Academias cadastradas</p>
+      </div>
+    </div>
+    <div class="estatistica-box">
+      <i data-lucide="users"></i>
+      <div>
+        <p class="numero-est">+1 milhão</p>
+        <p class="texto-est">Pessoas conectadas</p>
+      </div>
+    </div>
+    <div class="estatistica-box">
+      <i data-lucide="star"></i>
+      <div>
+        <p class="numero-est">4,8</p>
+        <p class="texto-est">Avaliação média</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- script dos icones -->
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
