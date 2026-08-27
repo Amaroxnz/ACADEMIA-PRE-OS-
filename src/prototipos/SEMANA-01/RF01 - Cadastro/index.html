@@ -1,441 +1,439 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitPerto - Login</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>FitPerto - Criar Conta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    :root {
-      --bg-dark: #090A0C;
-      --card-bg: #121418;
-      --card-border: #1E2228;
-      --input-bg: #0D0F12;
-      --input-border: #22272E;
-      --green-primary: #A3E635;
-      --green-hover: #84CC16;
-      --text-white: #FFFFFF;
-      --text-muted: #94A3B8;
-      --text-dark: #000000;
-    }
-
+    /* Reset basico do css */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-white);
+      background-color: #090A0C;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
-    /* Layout principal */
-    .main-container {
+    .container-geral {
       display: flex;
-      flex: 1;
       width: 100%;
+      height: 100%;
+      flex-grow: 1;
     }
 
-    /* Lado Esquerdo - Hero Banner */
-    .hero-section {
-      flex: 1;
-      position: relative;
-      background: linear-gradient(135deg, rgba(9, 10, 12, 0.85) 0%, rgba(9, 10, 12, 0.95) 100%),
-                  url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
-      padding: 3rem;
+    /* ESQUERDA (IMAGEM DO BANNER) */
+    .parte-imagem {
+      width: 50%;
+      background-image: linear-gradient(135deg, rgba(9, 10, 12, 0.85) 0%, rgba(9, 10, 12, 0.95) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      padding: 50px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
 
-    .brand-logo {
+    .logo-site {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 1.5rem;
+      font-size: 24px;
       font-weight: 700;
     }
 
-    .brand-logo i {
-      color: var(--green-primary);
+    .logo-site i {
+      color: #A3E635;
+      margin-right: 10px;
     }
 
-    .hero-content {
-      max-width: 520px;
-      margin-top: auto;
-      margin-bottom: auto;
+    .textos-meio {
+      margin-top: 150px;
+      max-width: 500px;
     }
 
-    .hero-title {
-      font-size: 3.5rem;
+    .texto-gigante {
+      font-size: 55px;
       font-weight: 800;
       line-height: 1.1;
-      margin-bottom: 1.5rem;
-      letter-spacing: -1px;
+      margin-bottom: 20px;
     }
 
-    .hero-title .highlight {
-      color: var(--green-primary);
+    .cor-verde {
+      color: #A3E635;
     }
 
-    .hero-description {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
+    .texto-menor {
+      color: #94A3B8;
+      font-size: 18px;
+      margin-bottom: 40px;
     }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      background: rgba(18, 20, 24, 0.6);
-      border: 1px solid var(--card-border);
-      padding: 1.25rem;
+    .quadrado-icones {
+      display: flex;
+      background-color: rgba(18, 20, 24, 0.6);
+      border: 1px solid #1E2228;
       border-radius: 12px;
-      backdrop-filter: blur(8px);
+      padding: 20px;
+      gap: 15px;
     }
 
-    .feature-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+    .coluna-icone {
+      width: 33%;
     }
 
-    .feature-item i {
-      color: var(--green-primary);
+    .coluna-icone i {
+      color: #A3E635;
+      margin-bottom: 10px;
     }
 
-    .feature-title {
-      font-size: 0.9rem;
-      font-weight: 600;
+    .titulo-icone {
+      font-weight: bold;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
     }
 
-    .feature-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.3;
+    .desc-icone {
+      font-size: 12px;
+      color: #94A3B8;
     }
 
-    /* Lado Direito - Painel de Login */
-    .login-section {
-      flex: 1;
+    /* DIREITA (CADASTRO) */
+    .parte-form {
+      width: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: 20px;
     }
 
-    .login-card {
-      width: 100%;
-      max-width: 440px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--card-border);
+    .caixa-branca-cadastro {
+      background-color: #121418;
+      border: 1px solid #1E2228;
       border-radius: 16px;
-      padding: 2.5rem;
+      padding: 40px;
+      width: 440px;
     }
 
-    .login-header {
+    .header-form {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 30px;
     }
 
-    .login-header h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .header-form h2 {
+      font-size: 28px;
     }
 
-    .login-header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
+    .header-form p {
+      color: #94A3B8;
+      margin-top: 10px;
     }
 
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #D1D5DB;
-    }
-
-    .input-wrapper {
+    .div-input {
+      margin-bottom: 15px;
       position: relative;
-      display: flex;
-      align-items: center;
     }
 
-    .input-icon {
-      position: absolute;
-      left: 1rem;
-      color: var(--text-muted);
-      pointer-events: none;
-    }
-
-    .input-icon-right {
-      position: absolute;
-      right: 1rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.85rem 1rem 0.85rem 2.75rem;
-      background-color: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      color: var(--text-white);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-control:focus {
-      border-color: var(--green-primary);
-    }
-
-    .forgot-link {
+    .div-input label {
       display: block;
-      text-align: right;
-      color: var(--green-primary);
-      font-size: 0.85rem;
-      text-decoration: none;
-      margin-top: 0.5rem;
+      margin-bottom: 5px;
+      color: #D1D5DB;
+      font-size: 14px;
     }
 
-    .forgot-link:hover {
-      text-decoration: underline;
+    .envolve-input {
+      position: relative;
     }
 
-    .btn-primary {
+    .icone-dentro-esq {
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      color: #94A3B8;
+    }
+
+    .icone-dentro-dir {
+      position: absolute;
+      right: 15px;
+      top: 12px;
+      color: #94A3B8;
+    }
+
+    .input-padrao {
       width: 100%;
-      padding: 0.9rem;
-      background-color: var(--green-primary);
-      color: var(--text-dark);
-      font-weight: 700;
-      font-size: 1rem;
-      border: none;
+      padding: 12px;
+      padding-left: 45px;
+      background-color: #0D0F12;
+      border: 1px solid #22272E;
       border-radius: 8px;
-      cursor: pointer;
-      margin-top: 1.5rem;
-      transition: background-color 0.2s;
+      color: white;
+      font-family: 'Inter', sans-serif;
     }
 
-    .btn-primary:hover {
-      background-color: var(--green-hover);
-    }
-
-    .divider {
+    .div-termos {
       display: flex;
       align-items: center;
-      margin: 1.5rem 0;
-      color: var(--text-muted);
-      font-size: 0.85rem;
+      margin-top: 15px;
     }
 
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background-color: var(--card-border);
+    .div-termos input {
+      margin-right: 10px;
+      width: 15px;
+      height: 15px;
     }
 
-    .divider span {
-      padding: 0 0.75rem;
+    .div-termos p {
+      font-size: 13px;
+      color: #94A3B8;
     }
 
-    .btn-google {
+    .div-termos a {
+      color: #A3E635;
+      text-decoration: none;
+    }
+
+    .botao-criar {
       width: 100%;
-      padding: 0.85rem;
-      background-color: transparent;
-      border: 1px solid var(--input-border);
+      background-color: #A3E635;
+      color: black;
+      border: none;
+      padding: 15px;
       border-radius: 8px;
-      color: var(--text-white);
-      font-weight: 600;
-      font-size: 0.95rem;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 25px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .divisor {
+      text-align: center;
+      color: #94A3B8;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .botao-google-cad {
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid #22272E;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
       cursor: pointer;
-      transition: background-color 0.2s;
     }
 
-    .btn-google:hover {
-      background-color: var(--input-bg);
+    .botao-google-cad svg {
+      margin-right: 10px;
     }
 
-    .signup-text {
+    .ja-tem-conta {
       text-align: center;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
+      margin-top: 25px;
+      color: #94A3B8;
+      font-size: 14px;
     }
 
-    .signup-text a {
-      color: var(--green-primary);
+    .ja-tem-conta a {
+      color: #A3E635;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: bold;
     }
 
-    .signup-text a:hover {
-      text-decoration: underline;
-    }
-
-    /* Barra de Estatísticas Inferior */
-    .stats-bar {
+    /* FOOTER (RODAPE) */
+    .barra-status {
+      background-color: #050607;
+      border-top: 1px solid #1E2228;
+      padding: 25px;
       display: flex;
       justify-content: space-around;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      background-color: #050607;
-      border-top: 1px solid var(--card-border);
     }
 
-    .stat-item {
+    .item-status {
       display: flex;
       align-items: center;
-      gap: 1rem;
     }
 
-    .stat-icon {
-      color: var(--green-primary);
+    .item-status i {
+      color: #A3E635;
+      margin-right: 15px;
     }
 
-    .stat-number {
-      font-size: 1.25rem;
-      font-weight: 700;
+    .titulo-status {
+      font-size: 20px;
+      font-weight: bold;
     }
 
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .texto-status {
+      font-size: 12px;
+      color: #94A3B8;
     }
 
-    /* Responsividade */
+    /* Responsivo para celular */
     @media (max-width: 900px) {
-      .main-container {
+      .container-geral {
         flex-direction: column;
       }
-
-      .hero-title {
-        font-size: 2.5rem;
+      .parte-imagem, .parte-form {
+        width: 100%;
       }
-
-      .stats-bar {
+      .quadrado-icones {
         flex-direction: column;
-        gap: 1.5rem;
-        align-items: flex-start;
+      }
+      .coluna-icone {
+        width: 100%;
+      }
+      .barra-status {
+        flex-direction: column;
+        gap: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="main-container">
-    <!-- Lado Esquerdo -->
-    <section class="hero-section">
-      <div class="brand-logo">
+  <!-- engloba tudo menos o rodape -->
+  <div class="container-geral">
+    
+    <!-- ESQUERDA -->
+    <div class="parte-imagem">
+      <div class="logo-site">
         <i data-lucide="map-pin"></i>
         <span>FitPerto</span>
       </div>
 
-      <div class="hero-content">
-        <h1 class="hero-title">
-          Encontre academias <span class="highlight">perto de você.</span>
+      <div class="textos-meio">
+        <h1 class="texto-gigante">
+          Crie sua conta e <span class="cor-verde">comece hoje.</span>
         </h1>
-        <p class="hero-description">
-          Descubra academias incríveis na sua região, compare preços, avaliações e comece hoje mesmo sua jornada.
+        <p class="texto-menor">
+          Junte-se a milhares de pessoas, descubra as melhores academias da sua região e transforme sua rotina.
         </p>
 
-        <div class="features-grid">
-          <div class="feature-item">
-            <i data-lucide="map-pin" size="20"></i>
-            <span class="feature-title">Perto de você</span>
-            <span class="feature-desc">Encontre academias na sua região</span>
+        <!-- bloquinho transparente -->
+        <div class="quadrado-icones">
+          <div class="coluna-icone">
+            <i data-lucide="map-pin"></i>
+            <span class="titulo-icone">Perto de você</span>
+            <span class="desc-icone">Encontre academias na sua região</span>
           </div>
-          <div class="feature-item">
-            <i data-lucide="star" size="20"></i>
-            <span class="feature-title">Compare</span>
-            <span class="feature-desc">Veja avaliações, preços e modalidades</span>
+          <div class="coluna-icone">
+            <i data-lucide="star"></i>
+            <span class="titulo-icone">Compare</span>
+            <span class="desc-icone">Veja avaliações, preços e modalidades</span>
           </div>
-          <div class="feature-item">
-            <i data-lucide="zap" size="20"></i>
-            <span class="feature-title">Comece hoje</span>
-            <span class="feature-desc">Escolha e comece sua jornada</span>
+          <div class="coluna-icone">
+            <i data-lucide="zap"></i>
+            <span class="titulo-icone">Comece hoje</span>
+            <span class="desc-icone">Escolha e comece sua jornada</span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Lado Direito (Login) -->
-    <section class="login-section">
-      <div class="login-card">
-        <div class="login-header">
-          <h2>Bem-vindo de volta!</h2>
-          <p>Faça login para continuar sua jornada.</p>
+    <!-- DIREITA -->
+    <div class="parte-form">
+      <div class="caixa-branca-cadastro">
+        <div class="header-form">
+          <h2>Crie sua conta</h2>
+          <p>Preencha os dados abaixo para começar.</p>
         </div>
 
+        <!-- Inputs do cadastro -->
         <form>
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <div class="input-wrapper">
-              <i data-lucide="mail" class="input-icon" size="18"></i>
-              <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+          <div class="div-input">
+            <label>Nome completo</label>
+            <div class="envolve-input">
+              <i data-lucide="user" class="icone-dentro-esq"></i>
+              <input type="text" class="input-padrao" placeholder="Seu nome completo">
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="password">Senha</label>
-            <div class="input-wrapper">
-              <i data-lucide="lock" class="input-icon" size="18"></i>
-              <input type="password" id="password" class="form-control" placeholder="Sua senha" required>
-              <i data-lucide="eye-off" class="input-icon-right" size="18"></i>
+          <div class="div-input">
+            <label>E-mail</label>
+            <div class="envolve-input">
+              <i data-lucide="mail" class="icone-dentro-esq"></i>
+              <input type="email" class="input-padrao" placeholder="seu@email.com">
             </div>
-            <a href="#" class="forgot-link">Esqueceu sua senha?</a>
           </div>
 
-          <button type="submit" class="btn-primary">Entrar</button>
+          <div class="div-input">
+            <label>Senha</label>
+            <div class="envolve-input">
+              <i data-lucide="lock" class="icone-dentro-esq"></i>
+              <input type="password" class="input-padrao" placeholder="Crie uma senha forte">
+              <i data-lucide="eye-off" class="icone-dentro-dir"></i>
+            </div>
+          </div>
+
+          <!-- checkbox de aceitar -->
+          <div class="div-termos">
+            <input type="checkbox">
+            <p>Concordo com os <a href="#">Termos de Uso</a> e <a href="#">Privacidade</a></p>
+          </div>
+
+          <button type="button" class="botao-criar">Criar conta</button>
         </form>
 
-        <div class="divider">
-          <span>ou</span>
+        <div class="divisor">
+          - - - - ou - - - -
         </div>
 
-        <button class="btn-google">
+        <button class="botao-google-cad">
           <svg width="18" height="18" viewBox="0 0 24 24">
             <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z"/>
             <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
             <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 10.8 0 12.5s.7 2.8 1.9 5.2l3.7-2.9z"/>
             <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.3-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z"/>
           </svg>
-          Entrar com Google
+          Cadastrar com Google
         </button>
 
-        <p class="signup-text">
-          Ainda não tem uma conta? <a href="#">Cadastre-se</a>
+        <p class="ja-tem-conta">
+          Já tem uma conta? <a href="#">Entrar</a>
         </p>
       </div>
-    </section>
+    </div>
   </div>
 
+  <!-- RODAPE NO FINAL DO SITE -->
+  <div class="barra-status">
+    <div class="item-status">
+      <i data-lucide="building-2"></i>
+      <div>
+        <p class="titulo-status">+2.500</p>
+        <p class="texto-status">Academias cadastradas</p>
+      </div>
+    </div>
+    <div class="item-status">
+      <i data-lucide="users"></i>
+      <div>
+        <p class="titulo-status">+1 milhão</p>
+        <p class="texto-status">Pessoas conectadas</p>
+      </div>
+    </div>
+    <div class="item-status">
+      <i data-lucide="star"></i>
+      <div>
+        <p class="titulo-status">4,8</p>
+        <p class="texto-status">Avaliação média</p>
+      </div>
+    </div>
+  </div>
 
+  <!-- ativando icones da biblioteca -->
   <script>
     lucide.createIcons();
   </script>
