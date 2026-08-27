@@ -8,7 +8,6 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Reset basico do css */
     * {
       margin: 0;
       padding: 0;
@@ -31,7 +30,6 @@
       flex-grow: 1;
     }
 
-    /* ESQUERDA (IMAGEM DO BANNER) */
     .parte-imagem {
       width: 50%;
       background-image: linear-gradient(135deg, rgba(9, 10, 12, 0.85) 0%, rgba(9, 10, 12, 0.95) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop');
@@ -252,7 +250,6 @@
       font-weight: bold;
     }
 
-    /* FOOTER (RODAPE) */
     .barra-status {
       background-color: #050607;
       border-top: 1px solid #1E2228;
@@ -281,7 +278,6 @@
       color: #94A3B8;
     }
 
-    /* Responsivo para celular */
     @media (max-width: 900px) {
       .container-geral {
         flex-direction: column;
@@ -304,10 +300,8 @@
 </head>
 <body>
 
-  <!-- engloba tudo menos o rodape -->
   <div class="container-geral">
     
-    <!-- ESQUERDA -->
     <div class="parte-imagem">
       <div class="logo-site">
         <i data-lucide="map-pin"></i>
@@ -322,7 +316,6 @@
           Junte-se a milhares de pessoas, descubra as melhores academias da sua região e transforme sua rotina.
         </p>
 
-        <!-- bloquinho transparente -->
         <div class="quadrado-icones">
           <div class="coluna-icone">
             <i data-lucide="map-pin"></i>
@@ -343,7 +336,6 @@
       </div>
     </div>
 
-    <!-- DIREITA -->
     <div class="parte-form">
       <div class="caixa-branca-cadastro">
         <div class="header-form">
@@ -351,7 +343,6 @@
           <p>Preencha os dados abaixo para começar.</p>
         </div>
 
-        <!-- Inputs do cadastro -->
         <form>
           <div class="div-input">
             <label>Nome completo</label>
@@ -378,7 +369,6 @@
             </div>
           </div>
 
-          <!-- checkbox de aceitar -->
           <div class="div-termos">
             <input type="checkbox">
             <p>Concordo com os <a href="#">Termos de Uso</a> e <a href="#">Privacidade</a></p>
@@ -388,7 +378,7 @@
         </form>
 
         <div class="divisor">
-          - - - - ou - - - -
+          - - - - ou - - -
         </div>
 
         <button class="botao-google-cad">
@@ -408,32 +398,6 @@
     </div>
   </div>
 
-  <!-- RODAPE NO FINAL DO SITE -->
-  <div class="barra-status">
-    <div class="item-status">
-      <i data-lucide="building-2"></i>
-      <div>
-        <p class="titulo-status">+2.500</p>
-        <p class="texto-status">Academias cadastradas</p>
-      </div>
-    </div>
-    <div class="item-status">
-      <i data-lucide="users"></i>
-      <div>
-        <p class="titulo-status">+1 milhão</p>
-        <p class="texto-status">Pessoas conectadas</p>
-      </div>
-    </div>
-    <div class="item-status">
-      <i data-lucide="star"></i>
-      <div>
-        <p class="titulo-status">4,8</p>
-        <p class="texto-status">Avaliação média</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ativando icones da biblioteca -->
   <script>
     lucide.createIcons();
   </script>
