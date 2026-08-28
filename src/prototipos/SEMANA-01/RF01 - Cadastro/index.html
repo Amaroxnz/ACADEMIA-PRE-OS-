@@ -180,6 +180,8 @@
       left: 1rem;
       color: var(--text-muted);
       pointer-events: none;
+      display: flex;
+      align-items: center;
     }
 
     .input-icon-right {
@@ -188,6 +190,7 @@
       color: var(--text-muted);
       cursor: pointer;
       display: flex;
+      align-items: center;
     }
 
     .input-icon-right:hover {
@@ -196,7 +199,7 @@
 
     .form-control {
       width: 100%;
-      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      padding: 0.85rem 2.75rem 0.85rem 2.75rem;
       background-color: var(--input-bg);
       border: 1px solid var(--input-border);
       border-radius: 8px;
@@ -210,13 +213,8 @@
       border-color: var(--green-primary);
     }
 
-    /* Estilos de erro de validação (Borda vermelha) */
     .form-control.invalid-input {
-      border-color: #EF4444;
-      color: #EF4444;
-    }
-    .form-control.invalid-input:focus {
-      border-color: #EF4444;
+      border-color: #EF4444 !important;
     }
 
     .btn-primary {
@@ -324,17 +322,17 @@
 
         <div class="features-grid">
           <div class="feature-item">
-            <i data-lucide="map-pin" size="20"></i>
+            <i data-lucide="map-pin"></i>
             <span class="feature-title">Perto de você</span>
             <span class="feature-desc">Encontre academias na sua região</span>
           </div>
           <div class="feature-item">
-            <i data-lucide="star" size="20"></i>
+            <i data-lucide="star"></i>
             <span class="feature-title">Compare</span>
             <span class="feature-desc">Veja avaliações, preços e modalidades</span>
           </div>
           <div class="feature-item">
-            <i data-lucide="zap" size="20"></i>
+            <i data-lucide="zap"></i>
             <span class="feature-title">Comece hoje</span>
             <span class="feature-desc">Escolha e comece sua jornada</span>
           </div>
@@ -353,7 +351,7 @@
           <div class="form-group">
             <label for="name">Nome completo</label>
             <div class="input-wrapper">
-              <i data-lucide="user" class="input-icon" size="18"></i>
+              <i data-lucide="user" class="input-icon"></i>
               <input type="text" id="name" class="form-control" placeholder="Seu nome" required>
             </div>
           </div>
@@ -361,7 +359,7 @@
           <div class="form-group">
             <label for="email">E-mail</label>
             <div class="input-wrapper">
-              <i data-lucide="mail" class="input-icon" size="18"></i>
+              <i data-lucide="mail" class="input-icon"></i>
               <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
             </div>
           </div>
@@ -369,11 +367,10 @@
           <div class="form-group">
             <label for="password">Senha</label>
             <div class="input-wrapper">
-              <i data-lucide="lock" class="input-icon" size="18"></i>
-              <input type="password" id="password" class="form-control" placeholder="Crie uma senha forte (até 8 dígitos)" required>
-              <div class="input-icon-right">
-                <i data-lucide="eye-off" class="icon-eye-off" size="18"></i>
-                <i data-lucide="eye" class="icon-eye" size="18" style="display: none;"></i>
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="password" class="form-control" placeholder="Máximo de 8 dígitos" maxlength="8" required>
+              <div class="input-icon-right" id="togglePassword">
+                <i data-lucide="eye-off"></i>
               </div>
             </div>
           </div>
@@ -381,11 +378,10 @@
           <div class="form-group">
             <label for="confirm-password">Confirmar Senha</label>
             <div class="input-wrapper">
-              <i data-lucide="lock" class="input-icon" size="18"></i>
-              <input type="password" id="confirm-password" class="form-control" placeholder="Repita sua senha (até 8 dígitos)" required>
-              <div class="input-icon-right">
-                <i data-lucide="eye-off" class="icon-eye-off" size="18"></i>
-                <i data-lucide="eye" class="icon-eye" size="18" style="display: none;"></i>
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="confirm-password" class="form-control" placeholder="Repita sua senha" maxlength="8" required>
+              <div class="input-icon-right" id="toggleConfirmPassword">
+                <i data-lucide="eye-off"></i>
               </div>
             </div>
           </div>
@@ -415,6 +411,7 @@
   </div>
 
   <script>
+   
     lucide.createIcons();
 
     const form = document.getElementById('cadastroForm');
@@ -422,7 +419,7 @@
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm-password');
 
-    // validacao de e-mail 
+    // Validação de e-mail
     emailInput.addEventListener('input', function() {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (this.value.length > 0 && !emailPattern.test(this.value)) {
@@ -432,7 +429,7 @@
       }
     });
 
-   //validacao de senha
+    // Validação de tamanho da senha para borda vermelha
     function validarSenha(input) {
       if (input.value.length > 8) {
         input.classList.add('invalid-input');
@@ -449,35 +446,32 @@
       validarSenha(this);
     });
 
-    
+    // Bloqueio no envio se houver erros
     form.addEventListener('submit', function(event) {
       const invalidInputs = document.querySelectorAll('.invalid-input');
-      
       if (invalidInputs.length > 0) {
-        event.preventDefault(); /
-        alert('Por favor, corrija os campos destacados em vermelho antes de continuar (verifique o formato do e-mail e certifique-se de que a senha não passa de 8 dígitos).');
+        event.preventDefault();
+        alert('Por favor, corrija os campos destacados em vermelho antes de continuar.');
       }
     });
 
+   
+    function setupTogglePassword(toggleId, inputId) {
+      const toggleBtn = document.getElementById(toggleId);
+      const input = document.getElementById(inputId);
 
-    const toggleBtns = document.querySelectorAll('.input-icon-right');
-    toggleBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const input = this.previousElementSibling;
-        const iconEyeOff = this.querySelector('.icon-eye-off');
-        const iconEye = this.querySelector('.icon-eye');
-
-        if (input.type === 'password') {
-          input.type = 'text';
-          iconEyeOff.style.display = 'none';
-          iconEye.style.display = 'block';
-        } else {
-          input.type = 'password';
-          iconEyeOff.style.display = 'block';
-          iconEye.style.display = 'none';
-        }
+      toggleBtn.addEventListener('click', function() {
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        
+        
+        toggleBtn.innerHTML = `<i data-lucide="${isPassword ? 'eye' : 'eye-off'}"></i>`;
+        lucide.createIcons();
       });
-    });
+    }
+
+    setupTogglePassword('togglePassword', 'password');
+    setupTogglePassword('toggleConfirmPassword', 'confirm-password');
   </script>
 </body>
 </html>
