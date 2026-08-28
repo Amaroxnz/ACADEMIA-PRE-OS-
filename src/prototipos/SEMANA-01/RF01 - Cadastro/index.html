@@ -187,6 +187,11 @@
       right: 1rem;
       color: var(--text-muted);
       cursor: pointer;
+      display: flex;
+    }
+
+    .input-icon-right:hover {
+      color: var(--text-white);
     }
 
     .form-control {
@@ -341,10 +346,10 @@
       <div class="login-card">
         <div class="login-header">
           <h2>Crie sua conta</h2>
-          <p>Junte-se ao FitPerto e encontre sua academia ideal.</p>
+          <p>Junte-se ao AKIFIT e encontre sua academia ideal.</p>
         </div>
 
-        <form>
+        <form id="cadastroForm">
           <div class="form-group">
             <label for="name">Nome completo</label>
             <div class="input-wrapper">
@@ -366,7 +371,10 @@
             <div class="input-wrapper">
               <i data-lucide="lock" class="input-icon" size="18"></i>
               <input type="password" id="password" class="form-control" placeholder="Crie uma senha forte (até 8 dígitos)" required>
-              <i data-lucide="eye-off" class="input-icon-right" size="18"></i>
+              <div class="input-icon-right">
+                <i data-lucide="eye-off" class="icon-eye-off" size="18"></i>
+                <i data-lucide="eye" class="icon-eye" size="18" style="display: none;"></i>
+              </div>
             </div>
           </div>
 
@@ -375,7 +383,10 @@
             <div class="input-wrapper">
               <i data-lucide="lock" class="input-icon" size="18"></i>
               <input type="password" id="confirm-password" class="form-control" placeholder="Repita sua senha (até 8 dígitos)" required>
-              <i data-lucide="eye-off" class="input-icon-right" size="18"></i>
+              <div class="input-icon-right">
+                <i data-lucide="eye-off" class="icon-eye-off" size="18"></i>
+                <i data-lucide="eye" class="icon-eye" size="18" style="display: none;"></i>
+              </div>
             </div>
           </div>
 
@@ -406,11 +417,12 @@
   <script>
     lucide.createIcons();
 
+    const form = document.getElementById('cadastroForm');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm-password');
 
-    // Validação de e-mail 
+    // validacao de e-mail 
     emailInput.addEventListener('input', function() {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (this.value.length > 0 && !emailPattern.test(this.value)) {
@@ -420,7 +432,7 @@
       }
     });
 
-    // Validação de senha (máximo de 8 digitos)
+   //validacao de senha
     function validarSenha(input) {
       if (input.value.length > 8) {
         input.classList.add('invalid-input');
@@ -435,6 +447,36 @@
 
     confirmPasswordInput.addEventListener('input', function() {
       validarSenha(this);
+    });
+
+    
+    form.addEventListener('submit', function(event) {
+      const invalidInputs = document.querySelectorAll('.invalid-input');
+      
+      if (invalidInputs.length > 0) {
+        event.preventDefault(); /
+        alert('Por favor, corrija os campos destacados em vermelho antes de continuar (verifique o formato do e-mail e certifique-se de que a senha não passa de 8 dígitos).');
+      }
+    });
+
+
+    const toggleBtns = document.querySelectorAll('.input-icon-right');
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        const iconEyeOff = this.querySelector('.icon-eye-off');
+        const iconEye = this.querySelector('.icon-eye');
+
+        if (input.type === 'password') {
+          input.type = 'text';
+          iconEyeOff.style.display = 'none';
+          iconEye.style.display = 'block';
+        } else {
+          input.type = 'password';
+          iconEyeOff.style.display = 'block';
+          iconEye.style.display = 'none';
+        }
+      });
     });
   </script>
 </body>
