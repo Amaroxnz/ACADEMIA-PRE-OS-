@@ -7,311 +7,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <style>
-    :root {
-      --bg-dark: #090A0C;
-      --card-bg: #121418;
-      --card-border: #1E2228;
-      --input-bg: #0D0F12;
-      --input-border: #22272E;
-      --green-primary: #A3E635;
-      --green-hover: #84CC16;
-      --text-white: #FFFFFF;
-      --text-muted: #94A3B8;
-      --text-dark: #000000;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-white);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .main-container {
-      display: flex;
-      flex: 1;
-      width: 100%;
-    }
-
-    .hero-section {
-      flex: 1;
-      position: relative;
-      background: linear-gradient(135deg, rgba(9, 10, 12, 0.85) 0%, rgba(9, 10, 12, 0.95) 100%),
-                  url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-
-    .brand-logo i {
-      color: var(--green-primary);
-    }
-
-    .hero-content {
-      max-width: 520px;
-      margin-top: auto;
-      margin-bottom: auto;
-    }
-
-    .hero-title {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      letter-spacing: -1px;
-    }
-
-    .hero-title .highlight {
-      color: var(--green-primary);
-    }
-
-    .hero-description {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      background: rgba(18, 20, 24, 0.6);
-      border: 1px solid var(--card-border);
-      padding: 1.25rem;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
-    }
-
-    .feature-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .feature-item i {
-      color: var(--green-primary);
-    }
-
-    .feature-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .feature-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.3;
-    }
-
-    .login-section {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 440px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 2.5rem;
-    }
-
-    .login-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .login-header h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .login-header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #D1D5DB;
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 1rem;
-      color: var(--text-muted);
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-icon-right {
-      position: absolute;
-      right: 1rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-icon-right:hover {
-      color: var(--text-white);
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.85rem 2.75rem 0.85rem 2.75rem;
-      background-color: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      color: var(--text-white);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-control:focus {
-      border-color: var(--green-primary);
-    }
-
-    .form-control.invalid-input {
-      border-color: #EF4444 !important;
-    }
-
-    .btn-primary {
-      width: 100%;
-      padding: 0.9rem;
-      background-color: var(--green-primary);
-      color: var(--text-dark);
-      font-weight: 700;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 1.5rem;
-      transition: background-color 0.2s;
-    }
-
-    .btn-primary:hover {
-      background-color: var(--green-hover);
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      margin: 1.5rem 0;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background-color: var(--card-border);
-    }
-
-    .divider span {
-      padding: 0 0.75rem;
-    }
-
-    .btn-google {
-      width: 100%;
-      padding: 0.85rem;
-      background-color: transparent;
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      color: var(--text-white);
-      font-weight: 600;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .btn-google:hover {
-      background-color: var(--input-bg);
-    }
-
-    .signup-text {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .signup-text a {
-      color: var(--green-primary);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .signup-text a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 900px) {
-      .main-container {
-        flex-direction: column;
-      }
-      .hero-title {
-        font-size: 2.5rem;
-      }
-    }
-  </style>
 </head>
 <body>
-
   <div class="main-container">
     <section class="hero-section">
       <div class="brand-logo">
         <i data-lucide="map-pin"></i>
         <span>AKIFIT</span>
       </div>
-
       <div class="hero-content">
         <h1 class="hero-title">
           Encontre academias <span class="highlight">perto de você.</span>
@@ -319,7 +24,6 @@
         <p class="hero-description">
           Descubra academias incríveis na sua região, compare preços, avaliações e comece hoje mesmo sua jornada.
         </p>
-
         <div class="features-grid">
           <div class="feature-item">
             <i data-lucide="map-pin"></i>
@@ -342,136 +46,112 @@
 
     <section class="login-section">
       <div class="login-card">
-        <div class="login-header">
-          <h2>Crie sua conta</h2>
-          <p>Junte-se ao AKIFIT e encontre sua academia ideal.</p>
+        
+        <div id="feedback-screen" class="feedback-screen hidden">
+          <div id="feedback-icon"></div>
+          <h2 id="feedback-title"></h2>
+          <p id="feedback-message"></p>
+          <button id="btn-voltar" class="btn-primary">Voltar</button>
         </div>
 
-        <form id="cadastroForm">
-          <div class="form-group">
-            <label for="name">Nome completo</label>
-            <div class="input-wrapper">
-              <i data-lucide="user" class="input-icon"></i>
-              <input type="text" id="name" class="form-control" placeholder="Seu nome" required>
-            </div>
+        <div id="form-content">
+          <div class="login-header">
+            <h2>Crie sua conta</h2>
+            <p>Junte-se ao AKIFIT e encontre sua academia ideal.</p>
           </div>
 
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <div class="input-wrapper">
-              <i data-lucide="mail" class="input-icon"></i>
-              <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="password">Senha</label>
-            <div class="input-wrapper">
-              <i data-lucide="lock" class="input-icon"></i>
-              <input type="password" id="password" class="form-control" placeholder="Máximo de 8 dígitos" maxlength="8" required>
-              <div class="input-icon-right" id="togglePassword">
-                <i data-lucide="eye-off"></i>
+          <form id="cadastroForm">
+            <div class="form-group">
+              <label for="name">Nome completo</label>
+              <div class="input-wrapper">
+                <i data-lucide="user" class="input-icon"></i>
+                <input type="text" id="name" class="form-control" required>
               </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="confirm-password">Confirmar Senha</label>
-            <div class="input-wrapper">
-              <i data-lucide="lock" class="input-icon"></i>
-              <input type="password" id="confirm-password" class="form-control" placeholder="Repita sua senha" maxlength="8" required>
-              <div class="input-icon-right" id="toggleConfirmPassword">
-                <i data-lucide="eye-off"></i>
+            <div class="form-group">
+              <label for="cpf">CPF</label>
+              <div class="input-wrapper">
+                <i data-lucide="file-text" class="input-icon"></i>
+                <input type="text" id="cpf" class="form-control" required>
               </div>
             </div>
+
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <div class="input-wrapper">
+                <i data-lucide="phone" class="input-icon"></i>
+                <input type="tel" id="telefone" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cep">CEP (Localização Padrão)</label>
+              <div class="input-wrapper">
+                <i data-lucide="map" class="input-icon"></i>
+                <input type="text" id="cep" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Senha</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="password" class="form-control" minlength="8" required>
+                <div class="input-icon-right" id="togglePassword">
+                  <i data-lucide="eye-off"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirm-password">Confirmar Senha</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="confirm-password" class="form-control" minlength="8" required>
+                <div class="input-icon-right" id="toggleConfirmPassword">
+                  <i data-lucide="eye-off"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="termos" required>
+              <label for="termos">Concordo com os Termos de Uso e Política de Privacidade</label>
+            </div>
+
+            <button type="submit" class="btn-primary">Criar conta</button>
+          </form>
+
+          <div class="divider">
+            <span>ou</span>
           </div>
 
-          <button type="submit" class="btn-primary">Criar conta</button>
-        </form>
+          <button class="btn-google">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z"/>
+              <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+              <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 10.8 0 12.5s.7 2.8 1.9 5.2l3.7-2.9z"/>
+              <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.3-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z"/>
+            </svg>
+            Cadastrar com Google (OAuth 2.0)
+          </button>
 
-        <div class="divider">
-          <span>ou</span>
+          <p class="signup-text">
+            Já tem uma conta? <a href="../RF02 - Login/index.html">Faça login</a>
+          </p>
         </div>
-
-        <button class="btn-google">
-          <svg width="18" height="18" viewBox="0 0 24 24">
-            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z"/>
-            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
-            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 10.8 0 12.5s.7 2.8 1.9 5.2l3.7-2.9z"/>
-            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.3-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z"/>
-          </svg>
-          Cadastrar com Google
-        </button>
-
-        <p class="signup-text">
-          Já tem uma conta? <a href="../RF02 - Login/index.html">Faça login</a>
-        </p>
       </div>
     </section>
   </div>
-
-  <script>
-   
-    lucide.createIcons();
-
-    const form = document.getElementById('cadastroForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirm-password');
-
-    // Validação de e-mail
-    emailInput.addEventListener('input', function() {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (this.value.length > 0 && !emailPattern.test(this.value)) {
-        this.classList.add('invalid-input');
-      } else {
-        this.classList.remove('invalid-input');
-      }
-    });
-
-    // Validação de tamanho da senha para borda vermelha
-    function validarSenha(input) {
-      if (input.value.length > 8) {
-        input.classList.add('invalid-input');
-      } else {
-        input.classList.remove('invalid-input');
-      }
-    }
-
-    passwordInput.addEventListener('input', function() {
-      validarSenha(this);
-    });
-
-    confirmPasswordInput.addEventListener('input', function() {
-      validarSenha(this);
-    });
-
-    // Bloqueio no envio se houver erros
-    form.addEventListener('submit', function(event) {
-      const invalidInputs = document.querySelectorAll('.invalid-input');
-      if (invalidInputs.length > 0) {
-        event.preventDefault();
-        alert('Por favor, corrija os campos destacados em vermelho antes de continuar.');
-      }
-    });
-
-   
-    function setupTogglePassword(toggleId, inputId) {
-      const toggleBtn = document.getElementById(toggleId);
-      const input = document.getElementById(inputId);
-
-      toggleBtn.addEventListener('click', function() {
-        const isPassword = input.type === 'password';
-        input.type = isPassword ? 'text' : 'password';
-        
-        
-        toggleBtn.innerHTML = `<i data-lucide="${isPassword ? 'eye' : 'eye-off'}"></i>`;
-        lucide.createIcons();
-      });
-    }
-
-    setupTogglePassword('togglePassword', 'password');
-    setupTogglePassword('toggleConfirmPassword', 'confirm-password');
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

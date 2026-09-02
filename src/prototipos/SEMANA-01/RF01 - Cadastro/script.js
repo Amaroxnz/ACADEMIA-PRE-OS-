@@ -1,0 +1,138 @@
+lucide.createIcons();
+
+const form = document.getElementById('cadastroForm');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const confirmPasswordInput = document.getElementById('confirm-password');
+const termosInput = document.getElementById('termos');
+const cepInput = document.getElementById('cep');
+
+const formContent = document.getElementById('form-content');
+const feedbackScreen = document.getElementById('feedback-screen');
+const feedbackIcon = document.getElementById('feedback-icon');
+const feedbackTitle = document.getElementById('feedback-title');
+const feedbackMessage = document.getElementById('feedback-message');
+const btnVoltar = document.getElementById('btn-voltar');
+
+window.addEventListener('DOMContentLoaded', () => {
+  const cepSalvo = localStorage.getItem('cepPadrao');
+  if (cepSalvo) {
+    cepInput.value = cepSalvo;
+  }
+});
+
+emailInput.addEventListener('input', function() {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (this.value.length > 0 && !emailPattern.test(this.value)) {
+    this.classList.add('invalid-input');
+  } else {
+    this.classList.remove('invalid-input');
+  }
+});
+
+function validarSenha(input) {
+  if (input.value.length > 0 && input.value.length < 8) {
+    input.classList.add('invalid-input');
+  } else {
+    input.classList.remove('invalid-input');
+  }
+}
+
+passwordInput.addEventListener('input', function() {
+  validarSenha(this);
+});
+
+confirmPasswordInput.addEventListener('input', function() {
+  validarSenha(this);
+  if (this.value !== passwordInput.value && this.value.length > 0) {
+    this.classList.add('invalid-input');
+  }
+});
+
+termosInput.addEventListener('change', function() {
+  if (this.checked) {
+    this.parentElement.classList.remove('invalid-checkbox');
+  }
+});
+
+function showFeedback(sucesso) {
+  formContent.classList.add('hidden');
+  feedbackScreen.classList.remove('hidden');
+
+  if (sucesso) {
+    feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
+    feedbackTitle.textContent = 'Cadastro realizado!';
+    feedbackMessage.textContent = 'Sua conta foi criada com sucesso e suas preferências foram salvas.';
+  } else {
+    feedbackIcon.innerHTML = '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
+    feedbackTitle.textContent = 'Erro no cadastro';
+    feedbackMessage.textContent = 'Ocorreu um erro ao tentar criar sua conta. Verifique os dados e tente novamente.';
+  }
+  lucide.createIcons();
+}
+
+btnVoltar.addEventListener('click', () => {
+  feedbackScreen.classList.add('hidden');
+  formContent.classList.remove('hidden');
+});
+
+form.addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  let hasError = false;
+
+  if (passwordInput.value.length < 8) {
+    passwordInput.classList.add('invalid-input');
+    hasError = true;
+  }
+
+  if (passwordInput.value !== confirmPasswordInput.value) {
+    confirmPasswordInput.classList.add('invalid-input');
+    hasError = true;
+  }
+
+  if (!termosInput.checked) {
+    termosInput.parentElement.classList.add('invalid-checkbox');
+    hasError = true;
+  }
+
+  const invalidInputs = document.querySelectorAll('.invalid-input');
+  if (invalidInputs.length > 0 || hasError) {
+    showFeedback(false);
+    return;
+  }
+
+  localStorage.setItem('cepPadrao', cepInput.value);
+
+  try {
+    await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify({
+        status: 'simulacao_api_sucesso'
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    
+    showFeedback(true);
+    form.reset();
+  } catch (error) {
+    showFeedback(false);
+  }
+});
+
+function setupTogglePassword(toggleId, inputId) {
+  const toggleBtn = document.getElementById(toggleId);
+  const input = document.getElementById(inputId);
+
+  toggleBtn.addEventListener('click', function() {
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    toggleBtn.innerHTML = `<i data-lucide="${isPassword ? 'eye' : 'eye-off'}"></i>`;
+    lucide.createIcons();
+  });
+}
+
+setupTogglePassword('togglePassword', 'password');
+setupTogglePassword('toggleConfirmPassword', 'confirm-password');
