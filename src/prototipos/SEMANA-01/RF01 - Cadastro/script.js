@@ -5,7 +5,6 @@ const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirm-password');
 const termosInput = document.getElementById('termos');
-const cepInput = document.getElementById('cep');
 
 const formContent = document.getElementById('form-content');
 const feedbackScreen = document.getElementById('feedback-screen');
@@ -13,13 +12,6 @@ const feedbackIcon = document.getElementById('feedback-icon');
 const feedbackTitle = document.getElementById('feedback-title');
 const feedbackMessage = document.getElementById('feedback-message');
 const btnVoltar = document.getElementById('btn-voltar');
-
-window.addEventListener('DOMContentLoaded', () => {
-  const cepSalvo = localStorage.getItem('cepPadrao');
-  if (cepSalvo) {
-    cepInput.value = cepSalvo;
-  }
-});
 
 emailInput.addEventListener('input', function() {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,7 +54,7 @@ function showFeedback(sucesso) {
   if (sucesso) {
     feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Cadastro realizado!';
-    feedbackMessage.textContent = 'Sua conta foi criada com sucesso e suas preferências foram salvas.';
+    feedbackMessage.textContent = 'Sua conta foi criada com sucesso.';
   } else {
     feedbackIcon.innerHTML = '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Erro no cadastro';
@@ -101,8 +93,6 @@ form.addEventListener('submit', async function(event) {
     showFeedback(false);
     return;
   }
-
-  localStorage.setItem('cepPadrao', cepInput.value);
 
   try {
     await fetch('https://jsonplaceholder.typicode.com/posts', {
