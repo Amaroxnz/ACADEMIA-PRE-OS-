@@ -22,23 +22,45 @@ emailInput.addEventListener('input', function() {
   }
 });
 
-function validarSenha(input) {
-  if (input.value.length > 0 && input.value.length < 8) {
-    input.classList.add('invalid-input');
+
+function validarSenhas() {
+  const pass = passwordInput.value;
+  const confPass = confirmPasswordInput.value;
+
+  
+  if (pass.length > 0 && pass.length < 8) {
+    passwordInput.classList.add('invalid-input');
   } else {
-    input.classList.remove('invalid-input');
+    passwordInput.classList.remove('invalid-input');
+  }
+
+  
+  if (confPass.length > 0) {
+    if (pass !== confPass) {
+      confirmPasswordInput.classList.add('invalid-input');
+    } else {
+      confirmPasswordInput.classList.remove('invalid-input');
+    }
+  } else {
+    confirmPasswordInput.classList.remove('invalid-input');
   }
 }
 
-passwordInput.addEventListener('input', function() {
-  validarSenha(this);
-});
 
-confirmPasswordInput.addEventListener('input', function() {
-  validarSenha(this);
-  if (this.value !== passwordInput.value && this.value.length > 0) {
-    this.classList.add('invalid-input');
-  }
+passwordInput.addEventListener('input', validarSenhas);
+confirmPasswordInput.addEventListener('input', validarSenhas);
+
+
+const btnGoogle = document.getElementById('btn-google');
+btnGoogle.addEventListener('click', function() {
+  formContent.classList.add('hidden');
+  feedbackScreen.classList.remove('hidden');
+  
+  feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
+  feedbackTitle.textContent = 'Autenticado com Google!';
+  feedbackMessage.textContent = 'Sua conta Google (OAuth 2.0) foi vinculada com sucesso.';
+  
+  lucide.createIcons();
 });
 
 termosInput.addEventListener('change', function() {
