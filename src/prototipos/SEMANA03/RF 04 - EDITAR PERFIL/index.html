@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akifit - Meu Perfil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">⚡ Akifit</div>
+        <div class="nav-links">
+            <a href="inicio.html">Início/Busca</a>
+            <a href="login.html">Login</a>
+            <a href="cadastro.html">Cadastro</a>
+            <a href="index.html" class="active">Meu Perfil</a>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        <h2>Meus Dados</h2>
+        
+        <div id="msgSucesso" class="alert success hidden">
+            Perfil atualizado com sucesso!
+        </div>
+
+        <form id="formPerfil">
+            
+            <div class="avatar-section">
+                <div class="avatar-preview">
+                    <img id="imgAvatar" src="https://via.placeholder.com/120/222c26/a3e635?text=Foto" alt="Foto de Perfil">
+                </div>
+                <div class="avatar-actions">
+                    <label for="inputFoto" class="btn-outline">Alterar Foto</label>
+                    <input type="file" id="inputFoto" accept="image/jpeg, image/png, image/webp" hidden>
+                    <button type="button" id="btnRemoverFoto" class="btn-text">Remover Foto</button>
+                </div>
+                <span id="erroFoto" class="error-text hidden">A imagem excede o limite de 5MB.</span>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Seu nome" required>
+                    <span id="erroNome" class="error-text hidden">Por favor, insira seu nome.</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                    <span id="erroEmail" class="error-text hidden">Insira um e-mail com formato válido.</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" placeholder="(DD) 90000-0000">
+                </div>
+
+                <div class="input-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" placeholder="Apenas números" maxlength="8" required>
+                    <span id="erroCep" class="error-text hidden">CEP inválido. Digite os 8 números.</span>
+                </div>
+            </div>
+
+            <div class="preferences-section">
+                <h3>Preferências de Treino</h3>
+                <p>Selecione suas modalidades favoritas para personalizarmos sua busca.</p>
+                
+                <div class="checkbox-grid">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="treino" value="Musculação"> Musculação
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="treino" value="Crossfit"> Crossfit
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="treino" value="Natação"> Natação
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="treino" value="Lutas"> Lutas (Boxe, Muay Thai)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="treino" value="Pilates"> Pilates
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-neon">Salvar Alterações</button>
+        </form>
+    </main>
+
+    <script src="perfil.js"></script>
+</body>
+</html>

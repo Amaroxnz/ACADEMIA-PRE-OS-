@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKIFIT - Recuperar Senha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="main-container">
+    <section class="hero-section">
+      <div class="brand-logo">
+        <i data-lucide="map-pin"></i>
+        <span>AKIFIT</span>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Encontre academias <span class="highlight">perto de você.</span>
+        </h1>
+        <p class="hero-description">
+          Descubra academias incríveis na sua região, compare preços, avaliações e comece hoje mesmo sua jornada.
+        </p>
+        <div class="features-grid">
+          <div class="feature-item">
+            <i data-lucide="map-pin"></i>
+            <span class="feature-title">Perto de você</span>
+            <span class="feature-desc">Encontre academias na sua região</span>
+          </div>
+          <div class="feature-item">
+            <i data-lucide="star"></i>
+            <span class="feature-title">Compare</span>
+            <span class="feature-desc">Veja avaliações, preços e modalidades</span>
+          </div>
+          <div class="feature-item">
+            <i data-lucide="zap"></i>
+            <span class="feature-title">Comece hoje</span>
+            <span class="feature-desc">Escolha e comece sua jornada</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-section">
+      <div class="login-card">
+
+        <div id="feedback-screen" class="feedback-screen hidden">
+          <div id="feedback-icon"></div>
+          <h2 id="feedback-title"></h2>
+          <p id="feedback-message"></p>
+          <button id="btn-voltar" class="btn-primary">Tentar Novamente</button>
+          <a href="../RF02 - Login/index.html" class="back-to-login" style="margin-top: 0.5rem;">
+            <i data-lucide="arrow-left"></i> Voltar para o login
+          </a>
+        </div>
+
+        <div id="form-content">
+          <a href="../RF02 - Login/index.html" class="back-to-login">
+            <i data-lucide="arrow-left"></i> Voltar para o login
+          </a>
+
+          <div class="recover-icon-wrapper">
+            <i data-lucide="key-round"></i>
+          </div>
+
+          <div class="login-header">
+            <h2>Recuperar senha</h2>
+            <p>Informe o e-mail da sua conta e enviaremos um link para redefinir sua senha.</p>
+          </div>
+
+          <form id="recuperarForm">
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <div class="input-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btn-submit">Enviar link de recuperação</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
