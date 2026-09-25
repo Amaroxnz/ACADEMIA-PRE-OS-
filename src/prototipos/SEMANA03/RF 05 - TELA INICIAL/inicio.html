@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akifit - Início e Busca</title>
+    <link rel="stylesheet" href="style-inicio.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">⚡ Akifit</div>
+        <div class="nav-links">
+            <a href="inicio.html" class="active">Início/Busca</a>
+            <a href="login.html">Login</a>
+            <a href="cadastro.html">Cadastro</a>
+            <a href="index.html">Meu Perfil</a>
+        </div>
+    </nav>
+
+    <main class="search-container">
+        <section class="search-header">
+            <h1>Encontre sua próxima academia</h1>
+            <div class="search-box">
+                <input type="text" id="inputBusca" placeholder="Busque por nome, bairro ou modalidade...">
+                <button id="btnBuscar" class="btn-neon">Buscar</button>
+            </div>
+            <div class="filters">
+                <select id="filtroPreco">
+                    <option value="todos">Qualquer valor</option>
+                    <option value="barato">Até R$ 80,00</option>
+                    <option value="medio">R$ 80,00 - R$ 120,00</option>
+                    <option value="caro">Acima de R$ 120,00</option>
+                </select>
+                <select id="filtroModalidade">
+                    <option value="todos">Todas as Modalidades</option>
+                    <option value="Musculação">Musculação</option>
+                    <option value="Crossfit">Crossfit</option>
+                    <option value="Natação">Natação</option>
+                    <option value="Lutas">Lutas</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <h2 id="tituloResultados">Academias em destaque</h2>
+            <div class="grid-academias" id="listaAcademias">
+            </div>
+            <div id="mensagemVazia" class="hidden">
+                <p>Nenhuma academia encontrada com esses filtros.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="inicio.js"></script>
+</body>
+</html>
