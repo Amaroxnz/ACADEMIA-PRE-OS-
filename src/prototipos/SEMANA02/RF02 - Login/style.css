@@ -338,3 +338,9 @@ body {
     font-size: 2.5rem;
   }
 }
+/* Estado de carregamento/desabilitado dos botões */
+.btn-primary:disabled,
+.btn-google:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

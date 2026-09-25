@@ -120,3 +120,39 @@ function setupTogglePassword(toggleId, inputId) {
 }
 
 setupTogglePassword('togglePassword', 'password');
+
+// Login simulado via Google (fluxo apenas front-end, sem OAuth real)
+const btnGoogle = document.getElementById('btn-google');
+const btnGoogleText = document.getElementById('btn-google-text');
+
+btnGoogle.addEventListener('click', async function () {
+  btnGoogle.disabled = true;
+  btnGoogleText.textContent = 'Conectando com o Google...';
+
+  try {
+    await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify({ status: 'simulacao_login_google' }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    formContent.classList.add('hidden');
+    feedbackScreen.classList.remove('hidden');
+    feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
+    feedbackTitle.textContent = 'Login realizado!';
+    feedbackMessage.textContent = 'Autenticação com o Google concluída com sucesso. Redirecionando...';
+    btnVoltar.classList.add('hidden');
+    lucide.createIcons();
+
+    setTimeout(() => {
+      alert('Redirecionando para o sistema...');
+    }, 2000);
+  } catch (error) {
+    showFeedback(false);
+  } finally {
+    btnGoogle.disabled = false;
+    btnGoogleText.textContent = 'Entrar com Google';
+  }
+});
