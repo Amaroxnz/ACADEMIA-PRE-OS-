@@ -55,10 +55,15 @@ function showFeedback(sucesso) {
     feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Cadastro realizado!';
     feedbackMessage.textContent = 'Sua conta foi criada com sucesso.';
-  } else {
+    
+    setTimeout(() => {
+        window.location.href = '../RF05 - TELA INICIAL/inicio.html'; 
+    }, 2000);
+} else {
     feedbackIcon.innerHTML = '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Erro no cadastro';
     feedbackMessage.textContent = 'Ocorreu um erro ao tentar criar sua conta. Verifique os dados e tente novamente.';
+    
   }
   lucide.createIcons();
 }
@@ -149,6 +154,9 @@ btnGoogle.addEventListener('click', async function () {
     feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Cadastro realizado!';
     feedbackMessage.textContent = 'Sua conta foi criada com sucesso usando sua conta Google.';
+           setTimeout(() => {
+        window.location.href = '../RF05 - TELA INICIAL/inicio.html'; 
+    }, 2000);
     lucide.createIcons();
   } catch (error) {
     showFeedback(false);

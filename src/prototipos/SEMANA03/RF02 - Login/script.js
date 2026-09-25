@@ -36,7 +36,10 @@ function showFeedback(sucesso) {
     feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Login realizado!';
     feedbackMessage.textContent = 'Autenticação concluída com sucesso. Redirecionando...';
-    btnVoltar.classList.add('hidden'); // Oculta botão voltar em caso de sucesso
+    btnVoltar.classList.add('hidden');
+        setTimeout(() => {
+        window.location.href = '../RF05 - TELA INICIAL/inicio.html'; 
+    }, 2000);
   } else {
     feedbackIcon.innerHTML = '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Acesso Negado';
@@ -96,7 +99,6 @@ form.addEventListener('submit', async function(event) {
     if (true) { // Se sucesso, redireciona após 2 segundos
         setTimeout(() => {
             // window.location.href = '/painel.html';
-            alert("Redirecionando para o sistema...");
         }, 2000);
     }
   } catch (error) {
@@ -146,8 +148,8 @@ btnGoogle.addEventListener('click', async function () {
     btnVoltar.classList.add('hidden');
     lucide.createIcons();
 
-    setTimeout(() => {
-      alert('Redirecionando para o sistema...');
+       setTimeout(() => {
+        window.location.href = '../RF05 - TELA INICIAL/inicio.html'; 
     }, 2000);
   } catch (error) {
     showFeedback(false);
