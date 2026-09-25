@@ -22,45 +22,23 @@ emailInput.addEventListener('input', function() {
   }
 });
 
-
-function validarSenhas() {
-  const pass = passwordInput.value;
-  const confPass = confirmPasswordInput.value;
-
-  
-  if (pass.length > 0 && pass.length < 8) {
-    passwordInput.classList.add('invalid-input');
+function validarSenha(input) {
+  if (input.value.length > 0 && input.value.length < 8) {
+    input.classList.add('invalid-input');
   } else {
-    passwordInput.classList.remove('invalid-input');
-  }
-
-  
-  if (confPass.length > 0) {
-    if (pass !== confPass) {
-      confirmPasswordInput.classList.add('invalid-input');
-    } else {
-      confirmPasswordInput.classList.remove('invalid-input');
-    }
-  } else {
-    confirmPasswordInput.classList.remove('invalid-input');
+    input.classList.remove('invalid-input');
   }
 }
 
+passwordInput.addEventListener('input', function() {
+  validarSenha(this);
+});
 
-passwordInput.addEventListener('input', validarSenhas);
-confirmPasswordInput.addEventListener('input', validarSenhas);
-
-
-const btnGoogle = document.getElementById('btn-google');
-btnGoogle.addEventListener('click', function() {
-  formContent.classList.add('hidden');
-  feedbackScreen.classList.remove('hidden');
-  
-  feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
-  feedbackTitle.textContent = 'Autenticado com Google!';
-  feedbackMessage.textContent = 'Sua conta Google (OAuth 2.0) foi vinculada com sucesso.';
-  
-  lucide.createIcons();
+confirmPasswordInput.addEventListener('input', function() {
+  validarSenha(this);
+  if (this.value !== passwordInput.value && this.value.length > 0) {
+    this.classList.add('invalid-input');
+  }
 });
 
 termosInput.addEventListener('change', function() {
@@ -148,3 +126,34 @@ function setupTogglePassword(toggleId, inputId) {
 
 setupTogglePassword('togglePassword', 'password');
 setupTogglePassword('toggleConfirmPassword', 'confirm-password');
+
+// Cadastro simulado via Google (fluxo apenas front-end, sem OAuth real)
+const btnGoogle = document.getElementById('btn-google');
+const btnGoogleText = document.getElementById('btn-google-text');
+
+btnGoogle.addEventListener('click', async function () {
+  btnGoogle.disabled = true;
+  btnGoogleText.textContent = 'Conectando com o Google...';
+
+  try {
+    await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify({ status: 'simulacao_cadastro_google' }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    formContent.classList.add('hidden');
+    feedbackScreen.classList.remove('hidden');
+    feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
+    feedbackTitle.textContent = 'Cadastro realizado!';
+    feedbackMessage.textContent = 'Sua conta foi criada com sucesso usando sua conta Google.';
+    lucide.createIcons();
+  } catch (error) {
+    showFeedback(false);
+  } finally {
+    btnGoogle.disabled = false;
+    btnGoogleText.textContent = 'Cadastrar com Google (OAuth 2.0)';
+  }
+});
