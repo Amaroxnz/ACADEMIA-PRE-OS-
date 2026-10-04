@@ -60,16 +60,18 @@ form.addEventListener('submit', async function (event) {
   btnSubmit.disabled = true;
 
   try {
-    // Simulação de requisição ao Backend
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({ status: 'simulacao_api_recuperar_senha' }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
+    // Gera o token de redefinição (o envio do e-mail é simulado)
+    const token = Auth.solicitarReset(emailInput.value);
 
     showFeedback(true);
+    // Resposta genérica por segurança; o link simulado só aparece se o e-mail existe
+    const linkReset = document.getElementById('link-reset');
+    if (token) {
+      linkReset.href = Auth.URLS.redefinir + '?token=' + encodeURIComponent(token);
+      linkReset.style.display = 'block';
+    } else {
+      linkReset.style.display = 'none';
+    }
     form.reset();
   } catch (error) {
     showFeedback(false);

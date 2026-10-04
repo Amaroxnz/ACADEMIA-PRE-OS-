@@ -9,17 +9,13 @@
 <body>
     <nav class="navbar">
         <div class="logo">⚡ Akifit</div>
-        <div class="nav-links">
-            <a href="inicio.html" class="active">Início/Busca</a>
-            <a href="login.html">Login</a>
-            <a href="cadastro.html">Cadastro</a>
-            <a href="index.html">Meu Perfil</a>
-        </div>
+        <div class="nav-links" id="navLinks"></div>
     </nav>
 
     <main class="search-container">
         <section class="search-header">
             <h1>Encontre sua próxima academia</h1>
+            <p id="saudacao" class="aviso-pref"></p>
             <div class="search-box">
                 <input type="text" id="inputBusca" placeholder="Busque por nome, bairro ou modalidade...">
                 <button id="btnBuscar" class="btn-neon">Buscar</button>
@@ -51,6 +47,7 @@
         </section>
     </main>
 
+    <script src="../../shared/auth.js"></script>
     <script src="inicio.js"></script>
 </body>
 </html>

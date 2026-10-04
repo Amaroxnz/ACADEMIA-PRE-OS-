@@ -41,6 +41,16 @@ const academias = [
     }
 ];
 
+// Usuário logado e preferências de treino (definidas em "Meu Perfil")
+const usuario = Auth.getUser();
+const preferencias = usuario ? (usuario.preferencias || []) : [];
+Auth.renderNav('navLinks', 'inicio');
+if (usuario) {
+    document.getElementById('saudacao').textContent = preferencias.length
+        ? `Olá, ${usuario.nome.split(' ')[0]}! Destacamos as academias que combinam com: ${preferencias.join(', ')}.`
+        : `Olá, ${usuario.nome.split(' ')[0]}! Defina suas preferências em Meu Perfil para ver sugestões personalizadas.`;
+}
+
 const listaAcademias = document.getElementById('listaAcademias');
 const inputBusca = document.getElementById('inputBusca');
 const btnBuscar = document.getElementById('btnBuscar');
@@ -61,11 +71,22 @@ function renderizarAcademias(lista) {
     mensagemVazia.classList.add('hidden');
     tituloResultados.classList.remove('hidden');
 
+    // Academias que combinam com as preferências do usuário aparecem primeiro
+    const pontos = a => a.modalidades.filter(m => preferencias.includes(m)).length;
+    lista = [...lista].sort((x, y) => pontos(y) - pontos(x));
+
     lista.forEach(academia => {
         const card = document.createElement('div');
         card.className = 'card';
 
-        const tagsHTML = academia.modalidades.map(mod => `<span class="tag">${mod}</span>`).join('');
+        // Cartão inteiro clicável (RF-004 -> RF-005)
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            window.location.href = `../../SEMANA04/RF%2005%20-%20DETALHES%20DA%20ACADEMIA/RF-05.html?id=${academia.id}`;
+        });
+
+        const tagsHTML = academia.modalidades.map(mod =>
+            `<span class="tag${preferencias.includes(mod) ? ' tag-match' : ''}">${mod}</span>`).join('');
 
         card.innerHTML = `
             <img src="${academia.imagem}" alt="${academia.nome}" class="card-img">
@@ -77,7 +98,7 @@ function renderizarAcademias(lista) {
                     ${tagsHTML}
                 </div>
                 <p class="card-price">R$ ${academia.preco.toFixed(2).replace('.', ',')}<span style="font-size:12px; color:#9ca3af; font-weight:normal;">/mês</span></p>
-                <a href="#" class="btn-outline">Ver Detalhes</a>
+                <a href="../../SEMANA04/RF%2005%20-%20DETALHES%20DA%20ACADEMIA/RF-05.html?id=${academia.id}" class="btn-outline">Ver Detalhes</a>
             </div>
         `;
 
@@ -91,7 +112,7 @@ function filtrarAcademias() {
     const modalidadeSelecionada = filtroModalidade.value;
 
     const resultados = academias.filter(academia => {
-        const atendeBusca = academia.nome.toLowerCase().includes(termoBusca) || academia.bairro.toLowerCase().includes(termoBusca);
+        const atendeBusca = academia.nome.toLowerCase().includes(termoBusca) || academia.bairro.toLowerCase().includes(termoBusca) || academia.modalidades.some(m => m.toLowerCase().includes(termoBusca));
 
         let atendePreco = true;
         if (precoSelecionado === 'barato') atendePreco = academia.preco <= 80;

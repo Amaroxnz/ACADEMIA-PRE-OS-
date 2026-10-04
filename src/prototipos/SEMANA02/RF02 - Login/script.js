@@ -79,30 +79,21 @@ form.addEventListener('submit', async function(event) {
   }
 
   btnSubmit.textContent = 'Autenticando...';
-  
+  btnSubmit.disabled = true;
+
   try {
-    // Simulação de requisição ao Backend
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({ status: 'simulacao_api_login' }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-    
-    // Você pode simular um erro mudando o true para false abaixo (ex: testar senha incorreta)
-    showFeedback(true); 
-    
-    if (true) { // Se sucesso, redireciona após 2 segundos
-        setTimeout(() => {
-            // window.location.href = '/painel.html';
-            alert("Redirecionando para o sistema...");
-        }, 2000);
+    const r = await Auth.login(emailInput.value, passwordInput.value);
+    if (r.ok) {
+      showFeedback(true);
+      setTimeout(() => Auth.go('inicio'), 1200);
+    } else {
+      showFeedback(false);
     }
   } catch (error) {
     showFeedback(false);
   } finally {
     btnSubmit.textContent = 'Entrar';
+    btnSubmit.disabled = false;
   }
 });
 
@@ -130,25 +121,10 @@ btnGoogle.addEventListener('click', async function () {
   btnGoogleText.textContent = 'Conectando com o Google...';
 
   try {
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({ status: 'simulacao_login_google' }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-
-    formContent.classList.add('hidden');
-    feedbackScreen.classList.remove('hidden');
-    feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
-    feedbackTitle.textContent = 'Login realizado!';
+    await Auth.loginGoogle();
+    showFeedback(true);
     feedbackMessage.textContent = 'Autenticação com o Google concluída com sucesso. Redirecionando...';
-    btnVoltar.classList.add('hidden');
-    lucide.createIcons();
-
-    setTimeout(() => {
-      alert('Redirecionando para o sistema...');
-    }, 2000);
+    setTimeout(() => Auth.go('inicio'), 1200);
   } catch (error) {
     showFeedback(false);
   } finally {
@@ -156,3 +132,10 @@ btnGoogle.addEventListener('click', async function () {
     btnGoogleText.textContent = 'Entrar com Google';
   }
 });
+
+// Já está logado? Vai direto para a página inicial.
+if (Auth.getUser()) Auth.go('inicio');
+
+// Se veio do cadastro/redefinição, preenche o e-mail
+const emailParam = new URLSearchParams(location.search).get('email');
+if (emailParam) emailInput.value = emailParam;

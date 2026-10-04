@@ -10,12 +10,7 @@
 
     <nav class="navbar">
         <div class="logo">⚡ Akifit</div>
-        <div class="nav-links">
-            <a href="inicio.html">Início/Busca</a>
-            <a href="login.html">Login</a>
-            <a href="cadastro.html">Cadastro</a>
-            <a href="index.html" class="active">Meu Perfil</a>
-        </div>
+        <div class="nav-links" id="navLinks"></div>
     </nav>
 
     <main class="profile-container">
@@ -29,7 +24,7 @@
             
             <div class="avatar-section">
                 <div class="avatar-preview">
-                    <img id="imgAvatar" src="https://via.placeholder.com/120/222c26/a3e635?text=Foto" alt="Foto de Perfil">
+                    <img id="imgAvatar" src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27120%27 height=%27120%27%3E%3Crect width=%27120%27 height=%27120%27 fill=%27%23222c26%27/%3E%3Ctext x=%2760%27 y=%2766%27 font-size=%2716%27 fill=%27%23a3e635%27 text-anchor=%27middle%27 font-family=%27sans-serif%27%3EFoto%3C/text%3E%3C/svg%3E" alt="Foto de Perfil">
                 </div>
                 <div class="avatar-actions">
                     <label for="inputFoto" class="btn-outline">Alterar Foto</label>
@@ -91,6 +86,7 @@
         </form>
     </main>
 
-    <script src="perfil.js"></script>
+    <script src="../../shared/auth.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

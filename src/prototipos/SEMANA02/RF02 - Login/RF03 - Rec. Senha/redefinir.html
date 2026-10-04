@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AKIFIT - Recuperar Senha</title>
+  <title>AKIFIT - Redefinir Senha</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -51,43 +51,37 @@
           <div id="feedback-icon"></div>
           <h2 id="feedback-title"></h2>
           <p id="feedback-message"></p>
-          <button id="btn-voltar" class="btn-primary">Tentar Novamente</button>
-          <a id="link-reset" class="btn-primary" style="text-decoration:none;text-align:center;display:none;margin-top:0.5rem;">Abrir link do e-mail (simulação)</a>
-          <a href="../index.html" class="back-to-login" style="margin-top: 0.5rem;">
-            <i data-lucide="arrow-left"></i> Voltar para o login
-          </a>
+          <a id="btn-acao" href="../index.html" class="btn-primary" style="text-decoration:none;text-align:center;">Ir para o login</a>
         </div>
 
         <div id="form-content">
-          <a href="../index.html" class="back-to-login">
-            <i data-lucide="arrow-left"></i> Voltar para o login
-          </a>
-
-          <div class="recover-icon-wrapper">
-            <i data-lucide="key-round"></i>
-          </div>
-
+          <div class="recover-icon-wrapper"><i data-lucide="key-round"></i></div>
           <div class="login-header">
-            <h2>Recuperar senha</h2>
-            <p>Informe o e-mail da sua conta e enviaremos um link para redefinir sua senha.</p>
+            <h2>Nova senha</h2>
+            <p>Defina uma nova senha com no mínimo 8 caracteres.</p>
           </div>
-
-          <form id="recuperarForm">
+          <form id="redefinirForm">
             <div class="form-group">
-              <label for="email">E-mail</label>
+              <label for="senha">Nova senha</label>
               <div class="input-wrapper">
-                <i data-lucide="mail" class="input-icon"></i>
-                <input type="email" id="email" class="form-control" required>
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="senha" class="form-control" minlength="8" required>
               </div>
             </div>
-
-            <button type="submit" class="btn-primary" id="btn-submit">Enviar link de recuperação</button>
+            <div class="form-group">
+              <label for="confirma">Confirmar nova senha</label>
+              <div class="input-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="confirma" class="form-control" minlength="8" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">Redefinir senha</button>
           </form>
         </div>
       </div>
     </section>
   </div>
   <script src="../../../shared/auth.js"></script>
-  <script src="script.js"></script>
+  <script src="redefinir.js"></script>
 </body>
 </html>

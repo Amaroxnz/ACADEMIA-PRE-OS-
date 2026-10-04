@@ -47,23 +47,34 @@ termosInput.addEventListener('change', function() {
   }
 });
 
-function showFeedback(sucesso) {
+let irParaLogin = false;
+let emailCadastrado = '';
+
+function showFeedback(sucesso, msgErro) {
   formContent.classList.add('hidden');
   feedbackScreen.classList.remove('hidden');
 
   if (sucesso) {
     feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Cadastro realizado!';
-    feedbackMessage.textContent = 'Sua conta foi criada com sucesso.';
+    feedbackMessage.textContent = 'Sua conta foi criada com sucesso. Faça login para continuar.';
+    btnVoltar.textContent = 'Fazer login';
+    irParaLogin = true;
   } else {
+    btnVoltar.textContent = 'Voltar';
+    irParaLogin = false;
     feedbackIcon.innerHTML = '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Erro no cadastro';
-    feedbackMessage.textContent = 'Ocorreu um erro ao tentar criar sua conta. Verifique os dados e tente novamente.';
+    feedbackMessage.textContent = msgErro || 'Ocorreu um erro ao tentar criar sua conta. Verifique os dados e tente novamente.';
   }
   lucide.createIcons();
 }
 
 btnVoltar.addEventListener('click', () => {
+  if (irParaLogin) {
+    window.location.href = Auth.URLS.login + (emailCadastrado ? '?email=' + encodeURIComponent(emailCadastrado) : '');
+    return;
+  }
   feedbackScreen.classList.add('hidden');
   formContent.classList.remove('hidden');
 });
@@ -95,16 +106,10 @@ form.addEventListener('submit', async function(event) {
   }
 
   try {
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({
-        status: 'simulacao_api_sucesso'
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-    
+    const nome = document.getElementById('name').value;
+    const r = await Auth.register({ nome, email: emailInput.value, senha: passwordInput.value });
+    if (!r.ok) { showFeedback(false, r.erro); return; }
+    emailCadastrado = r.user.email;
     showFeedback(true);
     form.reset();
   } catch (error) {
@@ -136,20 +141,11 @@ btnGoogle.addEventListener('click', async function () {
   btnGoogleText.textContent = 'Conectando com o Google...';
 
   try {
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({ status: 'simulacao_cadastro_google' }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-
-    formContent.classList.add('hidden');
-    feedbackScreen.classList.remove('hidden');
-    feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
-    feedbackTitle.textContent = 'Cadastro realizado!';
-    feedbackMessage.textContent = 'Sua conta foi criada com sucesso usando sua conta Google.';
-    lucide.createIcons();
+    await Auth.loginGoogle(); // cria a conta (se não existir) e inicia a sessão
+    showFeedback(true);
+    feedbackMessage.textContent = 'Conta criada com o Google. Redirecionando...';
+    btnVoltar.classList.add('hidden');
+    setTimeout(() => Auth.go('inicio'), 1200);
   } catch (error) {
     showFeedback(false);
   } finally {
