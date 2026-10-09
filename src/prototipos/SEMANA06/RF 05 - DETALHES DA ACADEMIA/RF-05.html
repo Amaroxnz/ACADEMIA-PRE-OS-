@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Academia - AKIFIT</title>
+    <link rel="stylesheet" href="style-rf05.css">
+</head>
+<body>
+    <header class="navbar">
+        <button id="btn-voltar" class="btn-voltar">← Voltar para Busca</button>
+        <div class="logo">⚡ AKIFIT</div>
+        <button id="btn-favorito" class="btn-favorito" aria-label="Adicionar aos favoritos" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+        </button>
+    </header>
+
+    <div id="tela-erro" class="hidden">
+        <div class="erro-container">
+            <div class="icone-erro">⚠️</div>
+            <h2>Academia não encontrada ou temporariamente indisponível.</h2>
+            <p>Você será redirecionado para a busca em <span id="contador-erro">5</span> segundos…</p>
+            <button id="btn-erro-voltar" class="btn-neon">Voltar agora</button>
+        </div>
+    </div>
+
+    <div id="skeleton" class="skeleton-container">
+        <div class="skel-hero pulse"></div>
+        <div class="skel-content">
+            <div class="skel-title pulse"></div>
+            <div class="skel-text pulse"></div>
+            <div class="skel-box pulse"></div>
+        </div>
+    </div>
+
+    <main id="conteudo-principal" class="hidden">
+        <section class="hero" id="hero-section">
+            <div class="hero-overlay">
+                <h1 id="nome-academia"></h1>
+                <div class="hero-meta">
+                    <span id="nota-academia"></span>
+                    <span id="bairro-academia"></span>
+                </div>
+                <div id="endereco-hero" class="hero-endereco"></div>
+                <div id="badges-hero" class="badges-container"></div>
+            </div>
+        </section>
+
+        <section class="galeria-wrapper">
+            <div class="carrossel-container" id="carrossel-container">
+                <button id="btn-prev" class="carrossel-btn prev" aria-label="Imagem anterior">‹</button>
+                <div class="carrossel-track" id="galeria-track"></div>
+                <button id="btn-next" class="carrossel-btn next" aria-label="Próxima imagem">›</button>
+            </div>
+            <div class="carrossel-indicadores" id="carrossel-indicadores"></div>
+        </section>
+
+        <div class="container-grid">
+            <div class="col-esq">
+                <section class="planos card-bloco">
+                    <h2>Planos e Preços</h2>
+                    <div class="abas" role="tablist" id="lista-abas">
+                        <button class="aba-btn ativo" role="tab" aria-selected="true" aria-controls="panel-mensal" data-alvo="mensal" id="tab-mensal">Mensal</button>
+                        <button class="aba-btn" role="tab" aria-selected="false" aria-controls="panel-trimestral" data-alvo="trimestral" id="tab-trimestral">Trimestral</button>
+                        <button class="aba-btn" role="tab" aria-selected="false" aria-controls="panel-anual" data-alvo="anual" id="tab-anual">Anual</button>
+                    </div>
+                    <div id="conteudo-planos" class="tab-panels-container"></div>
+                    
+                    <div class="tabela-comparativa-container">
+                        <h3>Comparativo de Planos</h3>
+                        <div class="table-responsive">
+                            <table id="tabela-planos">
+                                <thead>
+                                    <tr>
+                                        <th>Plano</th>
+                                        <th>Valor Total</th>
+                                        <th>Equiv. Mensal</th>
+                                        <th>Economia</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="modalidades card-bloco">
+                    <h2>Modalidades</h2>
+                    <div id="lista-modalidades" class="tags-container"></div>
+                </section>
+
+                <section class="infraestrutura card-bloco">
+                    <h2>Infraestrutura e Comodidades</h2>
+                    <div id="lista-infra" class="infra-grid"></div>
+                </section>
+            </div>
+
+            <div class="col-dir">
+                <section class="localizacao card-bloco">
+                    <h2>Localização</h2>
+                    <p id="endereco-completo"></p>
+                    <div id="distancia-cep" class="distancia-box"></div>
+                    <div id="mapa-container" class="mapa"></div>
+                    <a id="link-rota" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline">Como chegar</a>
+                </section>
+
+                <section class="horarios card-bloco">
+                    <h2>Horários de Funcionamento</h2>
+                    <div id="status-funcionamento"></div>
+                    <ul id="lista-horarios"></ul>
+                </section>
+            </div>
+        </div>
+
+        <section class="avaliacoes card-bloco block-full">
+            <h2>Avaliações dos Alunos</h2>
+            <div class="resumo-notas" id="resumo-notas"></div>
+            <div id="lista-comentarios" class="comentarios-grid"></div>
+        </section>
+    </main>
+
+    <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+        <button id="lightbox-close" class="lightbox-close" aria-label="Fechar">×</button>
+        <img id="lightbox-img" src="" alt="Imagem ampliada">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <script src="script-rf05.js"></script>
+</body>
+</html>

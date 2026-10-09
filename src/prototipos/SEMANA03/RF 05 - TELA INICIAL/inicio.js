@@ -82,7 +82,7 @@ function renderizarAcademias(lista) {
         // Cartão inteiro clicável (RF-004 -> RF-005)
         card.style.cursor = 'pointer';
         card.addEventListener('click', () => {
-            window.location.href = `../../SEMANA04/RF%2005%20-%20DETALHES%20DA%20ACADEMIA/RF-05.html?id=${academia.id}`;
+            window.location.href = `../../SEMANA06/RF%2005%20-%20DETALHES%20DA%20ACADEMIA/RF-05.html?id=${academia.id}`;
         });
 
         const tagsHTML = academia.modalidades.map(mod =>
@@ -98,7 +98,7 @@ function renderizarAcademias(lista) {
                     ${tagsHTML}
                 </div>
                 <p class="card-price">R$ ${academia.preco.toFixed(2).replace('.', ',')}<span style="font-size:12px; color:#9ca3af; font-weight:normal;">/mês</span></p>
-                <a href="../../SEMANA04/RF%2005%20-%20DETALHES%20DA%20ACADEMIA/RF-05.html?id=${academia.id}" class="btn-outline">Ver Detalhes</a>
+                <a href="../../SEMANA06/RF%2005%20-%20DETALHES%20DA%20ACADEMIA/RF-05.html?id=${academia.id}" class="btn-outline">Ver Detalhes</a>
             </div>
         `;
 
