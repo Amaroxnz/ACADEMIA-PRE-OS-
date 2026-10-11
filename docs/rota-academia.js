@@ -1,13 +1,11 @@
-// GET /api/academias/:id  -  Detalhes da Academia (RF-005)
-// Devolve o MESMO formato do BANCO_SIMULADO do front (script-rf05.js).
-// Uso: app.use(require('./rota-academia'));  (db.js exporta { query } do pacote "pg")
+
 const express = require('express');
 const router = express.Router();
 const db = require('./db');
 
 const MSG_ERRO = "Academia não encontrada ou temporariamente indisponível.";
 
-// "07:30:00" -> "07:30" ; horário nulo (dia fechado) -> "00:00"
+
 const hhmm = (t) => (t ? String(t).substring(0, 5) : "00:00");
 const lista = (txt) => (txt ? txt.split(',').map(x => x.trim()).filter(Boolean) : []);
 
@@ -15,7 +13,6 @@ router.get('/api/academias/:id', async (req, res) => {
     try {
         const id = req.params.id;
 
-        // id precisa ser inteiro positivo; senão responde 404 amigável (e não 500 do banco)
         if (!/^[1-9]\d*$/.test(id)) {
             return res.status(404).json({ erro: MSG_ERRO });
         }
@@ -36,7 +33,7 @@ router.get('/api/academias/:id', async (req, res) => {
             db.query(`SELECT dia_semana, hora_abre, hora_fecha FROM horarios_funcionamento WHERE academia_id = $1`, [id]),
             db.query(`SELECT nome FROM modalidades WHERE academia_id = $1 ORDER BY nome`, [id]),
             db.query(`SELECT item FROM infraestrutura WHERE academia_id = $1 ORDER BY item`, [id]),
-            // RN-04: mais recentes primeiro. RN-02: a média é calculada no front a partir desta lista
+           
             db.query(`SELECT u.nome AS aluno, av.nota, av.comentario, av.data_avaliacao AS data
                       FROM avaliacoes av
                       JOIN usuarios u ON u.id = av.usuario_id
@@ -44,7 +41,6 @@ router.get('/api/academias/:id', async (req, res) => {
                       ORDER BY av.data_avaliacao DESC`, [id])
         ]);
 
-        // RN-03: sem ao menos 1 plano e 1 horário não existe página de detalhes
         if (planos.rows.length === 0 || horarios.rows.length === 0) {
             return res.status(404).json({ erro: MSG_ERRO });
         }
@@ -57,11 +53,11 @@ router.get('/api/academias/:id', async (req, res) => {
             longitude: parseFloat(a.longitude),
             telefone: a.telefone,
             capa: a.capa_url,
-            galeria: midias.rows,                       // [{ url, legenda }]
+            galeria: midias.rows,                    
             modalidades: mods.rows.map(m => m.nome),
             infraestrutura: infra.rows.map(i => i.item),
             horarios: horarios.rows.map(h => ({
-                dia: h.dia_semana,                      // 0 = domingo ... 6 = sábado
+                dia: h.dia_semana,             
                 abre: hhmm(h.hora_abre),
                 fecha: hhmm(h.hora_fecha)
             })),
@@ -71,15 +67,15 @@ router.get('/api/academias/:id', async (req, res) => {
                 beneficios: lista(p.beneficios),
                 modalidades_cobertas: lista(p.modalidades_cobertas)
             })),
-            avaliacoes: avs.rows                        // [{ aluno, nota, comentario, data }]
+            avaliacoes: avs.rows                      
         };
 
-        // ADR-003: cache curto para aliviar o banco em páginas muito acessadas
+       
         res.setHeader('Cache-Control', 'public, max-age=60');
         res.json(academia);
     } catch (erro) {
-        console.error('Erro em GET /api/academias/:id', erro); // detalhe só no servidor
-        res.status(500).json({ erro: MSG_ERRO });             // o usuário vê a mensagem amigável
+        console.error('Erro em GET /api/academias/:id', erro); 
+        res.status(500).json({ erro: MSG_ERRO });           
     }
 });
 
