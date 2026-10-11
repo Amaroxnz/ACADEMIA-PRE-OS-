@@ -1,19 +1,8 @@
-/* ==========================================================================
-   AKIFIT - RF-005 - Detalhes da Academia (protótipo front-end)
-   - Os dados vêm de GET /api/academias/:id (docs/rota-academia.js, modelo em docs/schema.sql - ADR-001, PostgreSQL).
-   - RNF-05: em produção todo o tráfego é HTTPS/TLS.
-   - RNF-06: a tela de erro garante degradação elegante se o serviço cair.
-   - ADR-003: cacheAcademias (Map) equivale ao Cache-Control da API.
-   ========================================================================== */
-
-// Caminho da tela de busca (RF-004) a partir da pasta SEMANA06
 const URL_BUSCA = '../../semana-03/rf05-tela-inicial/inicio.html';
 
-// Menu com Meu Perfil / Sair (auth.js e carregado antes deste script)
+
 if (window.Auth) Auth.renderNav('navLinks', 'detalhes');
 
-// URL base do back-end. Vazio = mesma origem (ex.: Express servindo o front).
-// Para um servidor separado, use algo como 'https://seu-backend.com'.
 const API_BASE = '';
 
 const iconesInfra = { "Vestiário": "🚪", "Chuveiro": "🚿", "Chuveiro quente": "🚿", "Ar-condicionado": "❄️", "Armários": "🗄️", "Estacionamento": "🚗", "Estacionamento livre": "🚗", "Wi-Fi": "📶", "Bebedouro": "🚰", "Piscina": "🏊", "Acessibilidade": "♿", "Tatame": "🥋" };
@@ -24,7 +13,6 @@ let currentImageIndex = 0;
 let lightboxIndex = 0;
 let ultimoFocoAntesLightbox = null;
 
-// "Voltar para Busca": volta no histórico se veio da busca; senão vai direto para ela
 document.getElementById('btn-voltar').addEventListener('click', () => {
     const veioDaBusca = document.referrer && document.referrer.includes('inicio.html');
     if (veioDaBusca && window.history.length > 1) window.history.back();
@@ -98,7 +86,7 @@ function textoAvaliacoes(qtd) {
 }
 
 function gerarEstrelas(nota) {
-    // Estrela cheia, meia estrela (preenchida pela metade) ou vazia
+
     let html = '';
     for (let i = 1; i <= 5; i++) {
         if (nota >= i) html += '<span class="star full">★</span>';
@@ -198,7 +186,7 @@ function setupGaleria(galeria) {
         img.alt = galeria[i].legenda;
         img.loading = 'lazy';
         img.decoding = 'async';
-        img.width = 800;  // evita layout shift (RNF-01)
+        img.width = 800; 
         img.height = 600;
         img.onerror = function() {
             this.onerror = null;
@@ -258,7 +246,7 @@ function renderizarPlanos(planos, telefone) {
 
     const pMensal = planos.find(p => p.tipo === 'mensal');
 
-    // FA-01: um painel para CADA aba; se a academia não oferece o plano, mostra aviso amigável
+   
     TIPOS.forEach(tipo => {
         const p = planos.find(x => x.tipo === tipo);
         const panel = document.createElement('div');
@@ -299,7 +287,7 @@ function renderizarPlanos(planos, telefone) {
         `;
         container.appendChild(panel);
 
-        // Tabela comparativa (RN-01: valor + periodicidade explícitos)
+       
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><strong>${rotulo(tipo)}</strong></td>
@@ -335,7 +323,7 @@ function renderizarPlanos(planos, telefone) {
         else if (e.key === 'End') novo = abasBtns.length - 1;
         if (novo >= 0) {
             e.preventDefault();
-            e.stopPropagation(); // não deixa a seta mexer na galeria
+            e.stopPropagation(); 
             ativarAba(abasBtns[novo].dataset.alvo, true);
         }
     });
@@ -509,7 +497,7 @@ document.addEventListener('keydown', (e) => {
         return;
     }
 
-    // Setas só controlam o carrossel quando o foco está nele ou na página (nunca em abas, campos ou botões)
+   
     const alvo = e.target;
     const foraDoCarrossel = alvo !== document.body && !alvo.closest('#carrossel-container');
     if (foraDoCarrossel || currentGallery.length === 0) return;
