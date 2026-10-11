@@ -41,7 +41,6 @@ const academias = [
     }
 ];
 
-// Usuário logado e preferências de treino (definidas em "Meu Perfil")
 const usuario = Auth.getUser();
 const preferencias = usuario ? (usuario.preferencias || []) : [];
 Auth.renderNav('navLinks', 'inicio');
@@ -71,7 +70,7 @@ function renderizarAcademias(lista) {
     mensagemVazia.classList.add('hidden');
     tituloResultados.classList.remove('hidden');
 
-    // Academias que combinam com as preferências do usuário aparecem primeiro
+
     const pontos = a => a.modalidades.filter(m => preferencias.includes(m)).length;
     lista = [...lista].sort((x, y) => pontos(y) - pontos(x));
 
@@ -79,7 +78,7 @@ function renderizarAcademias(lista) {
         const card = document.createElement('div');
         card.className = 'card';
 
-        // Cartão inteiro clicável (RF-004 -> RF-005)
+
         card.style.cursor = 'pointer';
         card.addEventListener('click', () => {
             window.location.href = `../../semana-06/rf05-detalhes-da-academia/RF-05.html?id=${academia.id}`;
