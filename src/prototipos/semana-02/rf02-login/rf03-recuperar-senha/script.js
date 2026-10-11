@@ -11,7 +11,7 @@ const feedbackMessage = document.getElementById('feedback-message');
 const btnVoltar = document.getElementById('btn-voltar');
 const btnSubmit = document.getElementById('btn-submit');
 
-// Validação visual de e-mail ao digitar
+
 emailInput.addEventListener('input', function () {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (this.value.length > 0 && !emailPattern.test(this.value)) {
