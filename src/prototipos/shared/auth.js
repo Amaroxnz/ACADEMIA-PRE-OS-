@@ -1,21 +1,20 @@
-/* AKIFIT - módulo compartilhado de autenticação (front-end, localStorage).
-   Em produção, troque estas funções por chamadas à API/back-end. */
+
 (function () {
   const KEY_USERS = 'akifit_usuarios';
   const KEY_SESSION = 'akifit_sessao';
   const KEY_RESET = 'akifit_reset_tokens';
 
-  // Raiz de /prototipos/ calculada a partir do próprio caminho deste script
+
   const src = (document.currentScript && document.currentScript.src) || '';
   const ROOT = src.replace(/shared\/auth\.js.*$/, '');
 
   const URLS = {
-    login: ROOT + 'SEMANA02/RF02%20-%20Login/index.html',
-    cadastro: ROOT + 'SEMANA-01/RF01%20-%20Cadastro/index.html',
-    recuperar: ROOT + 'SEMANA02/RF02%20-%20Login/RF03%20-%20Rec.%20Senha/index.html',
-    redefinir: ROOT + 'SEMANA02/RF02%20-%20Login/RF03%20-%20Rec.%20Senha/redefinir.html',
-    inicio: ROOT + 'SEMANA03/RF%2005%20-%20TELA%20INICIAL/inicio.html',
-    perfil: ROOT + 'SEMANA03/RF%2004%20-%20EDITAR%20PERFIL/index.html',
+    login: ROOT + 'semana-02/rf02-login/index.html',
+    cadastro: ROOT + 'semana-01/rf01-cadastro/index.html',
+    recuperar: ROOT + 'semana-02/rf02-login/rf03-recuperar-senha/index.html',
+    redefinir: ROOT + 'semana-02/rf02-login/rf03-recuperar-senha/redefinir.html',
+    inicio: ROOT + 'semana-03/rf05-tela-inicial/inicio.html',
+    perfil: ROOT + 'semana-03/rf04-editar-perfil/index.html',
   };
 
   const read = (k, def) => { try { return JSON.parse(localStorage.getItem(k)) ?? def; } catch (e) { return def; } };
@@ -60,7 +59,7 @@
       return { ok: true, user: u };
     },
 
-    // Simulação de login/cadastro com Google (sem OAuth real)
+    
     async loginGoogle() {
       const email = 'usuario.google@gmail.com';
       let u = users().find(x => x.email === email);
@@ -87,7 +86,6 @@
       return true;
     },
 
-    // Recuperação de senha (o "e-mail" é simulado: o token fica no localStorage)
     solicitarReset(email) {
       email = norm(email);
       const u = users().find(x => x.email === email);
@@ -112,7 +110,7 @@
       return true;
     },
 
-    // Monta os links do menu conforme o estado de login
+ 
     renderNav(containerId, ativo) {
       const el = document.getElementById(containerId);
       if (!el) return;
