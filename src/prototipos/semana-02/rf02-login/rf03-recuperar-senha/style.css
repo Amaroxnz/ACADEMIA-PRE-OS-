@@ -159,7 +159,7 @@ body {
   color: #D1D5DB;
 }
 
-/* Adições para a estrutura de login */
+
 .password-header {
   display: flex;
   justify-content: space-between;
@@ -182,7 +182,7 @@ body {
   text-decoration: underline;
   color: var(--green-hover);
 }
-/* Fim das adições */
+
 
 .input-wrapper {
   position: relative;
@@ -339,7 +339,7 @@ body {
   }
 }
 
-/* Adições para a tela de Recuperação de Senha */
+
 .back-to-login {
   display: inline-flex;
   align-items: center;
@@ -372,8 +372,7 @@ body {
   width: 28px;
   height: 28px;
 }
-/* Fim das adições */
-/* Estado de carregamento/desabilitado dos botões */
+
 .btn-primary:disabled,
 .btn-google:disabled {
   opacity: 0.7;
