@@ -1,181 +1,11 @@
-/* ==========================================================================
-   AKIFIT - RF-005 - Detalhes da Academia (protótipo front-end)
-   - Dados simulados espelham as colunas do docs/schema.sql (ADR-001, PostgreSQL).
-   - Em produção: trocar buscarAcademiaPorId() por fetch('/api/academias/' + id).
-   - RNF-05: em produção todo o tráfego é HTTPS/TLS.
-   - RNF-06: a tela de erro garante degradação elegante se o serviço cair.
-   - ADR-003: cacheAcademias (Map) equivale ao Cache-Control da API.
-   ========================================================================== */
 
-// Caminho da tela de busca (RF-004) a partir da pasta SEMANA06
-const URL_BUSCA = '../../SEMANA03/RF%2005%20-%20TELA%20INICIAL/inicio.html';
+const URL_BUSCA = '../../semana-03/rf05-tela-inicial/inicio.html';
 
-// Gera os 7 dias da semana (0=Domingo ... 6=Sábado). "00:00-00:00" = fechado.
-function horariosSemana(seg_sex, sab, dom) {
-    const linha = (dia, h) => ({ dia: dia, abre: h[0], fecha: h[1] });
-    return [1, 2, 3, 4, 5].map(d => linha(d, seg_sex)).concat([linha(6, sab), linha(0, dom)]);
-}
-const FECHADO = ["00:00", "00:00"];
-const ABERTO_24H = ["00:00", "23:59"];
 
-// As médias de nota batem com os cartões da tela inicial (RF-004): 4.5 / 4.7 / 4.9 / 4.2
-const BANCO_SIMULADO = [
-    {
-        id: 1,
-        nome: "Smart Fit - Guará II",
-        endereco: { rua: "QE 40", numero: "Lote 2", bairro: "Guará II", cidade: "Brasília", uf: "DF", cep: "71070400" },
-        latitude: -15.823, longitude: -47.975,
-        telefone: "61999999991",
-        capa: "https://placehold.co/1200x400/222c26/a3e635?text=Smart+Fit",
-        galeria: [
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Frente", legenda: "Fachada da unidade" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Musculacao", legenda: "Área de musculação" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Cardio", legenda: "Esteiras e bicicletas" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Funcional", legenda: "Espaço funcional" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Vestiario", legenda: "Vestiário" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Aulas", legenda: "Sala de aulas coletivas" }
-        ],
-        modalidades: ["Musculação", "Cardio", "Zumba"],
-        infraestrutura: ["Vestiário", "Chuveiro quente", "Ar-condicionado", "Armários", "Bebedouro", "Wi-Fi"],
-        horarios: horariosSemana(["06:00", "23:00"], ["08:00", "18:00"], ["09:00", "15:00"]),
-        planos: [
-            { tipo: 'mensal', valor: 109.90, beneficios: ["Acesso livre", "App de treinos"], modalidades_cobertas: ["Musculação", "Cardio"] },
-            { tipo: 'trimestral', valor: 299.70, beneficios: ["Acesso livre", "App de treinos", "1 avaliação física"], modalidades_cobertas: ["Musculação", "Cardio", "Zumba"] },
-            { tipo: 'anual', valor: 1078.80, beneficios: ["Acesso VIP", "Camiseta exclusiva", "Avaliações físicas trimestrais"], modalidades_cobertas: ["Todas as modalidades"] }
-        ],
-        // Fora de ordem de propósito: prova a ordenação decrescente por data (RN-04)
-        avaliacoes: [
-            { aluno: "Maria Souza", nota: 4, comentario: "Fica cheia às 18h, mas os equipamentos são ótimos.", data: "2026-09-28T14:30:00Z" },
-            { aluno: "João Silva", nota: 5, comentario: "Muito boa, equipamentos novos.", data: "2026-10-01T10:00:00Z" },
-            { aluno: "Ana Paula", nota: 5, comentario: "Ambiente limpo e instrutores atenciosos.", data: "2026-09-15T09:10:00Z" },
-            { aluno: "Rafael Lima", nota: 4, comentario: "Bom custo-benefício para o bairro.", data: "2026-08-30T19:45:00Z" },
-            { aluno: "Beatriz Alves", nota: 5, comentario: "As aulas de Zumba são excelentes!", data: "2026-08-12T07:20:00Z" },
-            { aluno: "Lucas Prado", nota: 4, comentario: "Chuveiros ótimos, só falta mais estacionamento.", data: "2026-07-22T21:00:00Z" }
-        ]
-    },
-    {
-        id: 2,
-        nome: "Bluefit - Águas Claras",
-        endereco: { rua: "Rua 36 Sul", numero: "Lote 4", bairro: "Águas Claras", cidade: "Brasília", uf: "DF", cep: "71931360" },
-        latitude: -15.836, longitude: -48.025,
-        telefone: "61988888888",
-        capa: "https://placehold.co/1200x400/222c26/a3e635?text=Bluefit",
-        galeria: [
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Musculacao", legenda: "Musculação" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Lutas", legenda: "Tatame de lutas" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Danca", legenda: "Sala de dança" }
-        ],
-        modalidades: ["Musculação", "Lutas", "Danças"],
-        infraestrutura: ["Vestiário", "Estacionamento", "Wi-Fi", "Tatame", "Chuveiro"],
-        horarios: horariosSemana(ABERTO_24H, ABERTO_24H, ABERTO_24H),
-        planos: [
-            { tipo: 'mensal', valor: 119.90, beneficios: ["Todas as modalidades", "Funcionamento 24h"], modalidades_cobertas: ["Musculação", "Lutas", "Danças"] },
-            { tipo: 'anual', valor: 1198.80, beneficios: ["Todas as modalidades", "Funcionamento 24h", "2 meses grátis"], modalidades_cobertas: ["Musculação", "Lutas", "Danças"] }
-        ],
-        avaliacoes: [
-            { aluno: "Carlos Mendes", nota: 4, comentario: "Gosto por ser 24h.", data: "2026-09-20T10:00:00Z" },
-            { aluno: "Patrícia Rocha", nota: 5, comentario: "Treino de madrugada sem fila.", data: "2026-10-02T02:15:00Z" },
-            { aluno: "Diego Nunes", nota: 5, comentario: "Tatame excelente para o jiu-jitsu.", data: "2026-09-05T20:30:00Z" },
-            { aluno: "Camila Freitas", nota: 5, comentario: "Equipe simpática e aparelhos novos.", data: "2026-08-18T18:00:00Z" },
-            { aluno: "Hugo Barreto", nota: 5, comentario: "Melhor da região.", data: "2026-08-02T06:40:00Z" },
-            { aluno: "Sofia Carvalho", nota: 5, comentario: "Aulas de dança muito animadas.", data: "2026-07-14T19:00:00Z" },
-            { aluno: "Mateus Gomes", nota: 4, comentario: "Às vezes lota no começo da noite.", data: "2026-06-30T21:10:00Z" }
-        ]
-    },
-    {
-        id: 3,
-        nome: "Crossfit Selva",
-        endereco: { rua: "SGAS 902", numero: "Bloco B", bairro: "Asa Sul", cidade: "Brasília", uf: "DF", cep: "70390020" },
-        latitude: -15.822, longitude: -47.925,
-        telefone: "61977777777",
-        capa: "https://placehold.co/1200x400/222c26/a3e635?text=Crossfit+Selva",
-        galeria: [
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Box", legenda: "Box principal" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=LPO", legenda: "Área de levantamento olímpico" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=WOD", legenda: "Quadro do WOD" }
-        ],
-        modalidades: ["Crossfit", "LPO"],
-        infraestrutura: ["Vestiário", "Bebedouro", "Estacionamento livre", "Chuveiro"],
-        horarios: horariosSemana(["06:00", "21:00"], ["08:00", "12:00"], FECHADO),
-        planos: [
-            { tipo: 'mensal', valor: 250.00, beneficios: ["Acesso livre", "WOD diário com coach"], modalidades_cobertas: ["Crossfit", "LPO"] }
-        ],
-        avaliacoes: [
-            { aluno: "Fernanda Dias", nota: 5, comentario: "Comunidade top!", data: "2026-10-01T08:00:00Z" },
-            { aluno: "Bruno Teixeira", nota: 5, comentario: "Coaches excelentes, evolução rápida.", data: "2026-09-18T07:00:00Z" },
-            { aluno: "Larissa Moura", nota: 5, comentario: "Box limpo e muito bem equipado.", data: "2026-09-02T19:20:00Z" },
-            { aluno: "Thiago Ramos", nota: 4, comentario: "Caro, mas vale cada centavo.", data: "2026-08-21T20:00:00Z" },
-            { aluno: "Isabela Cruz", nota: 5, comentario: "Aulas desafiadoras e acolhedoras.", data: "2026-08-05T06:30:00Z" },
-            { aluno: "Gustavo Pires", nota: 5, comentario: "Me fez amar o treino.", data: "2026-07-19T18:40:00Z" },
-            { aluno: "Renata Lopes", nota: 5, comentario: "Ambiente motivador.", data: "2026-07-01T07:15:00Z" },
-            { aluno: "Eduardo Faria", nota: 5, comentario: "Recomendo para iniciantes também.", data: "2026-06-12T12:00:00Z" }
-        ]
-    },
-    {
-        id: 4,
-        nome: "Academia Corpo & Água",
-        endereco: { rua: "QE 11", numero: "Área Especial 3", bairro: "Guará I", cidade: "Brasília", uf: "DF", cep: "71020000" },
-        latitude: -15.832, longitude: -47.987,
-        telefone: "61966666666",
-        capa: "https://placehold.co/1200x400/222c26/a3e635?text=Corpo+%26+Agua",
-        galeria: [
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Piscina", legenda: "Piscina aquecida" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Musculacao", legenda: "Musculação" },
-            { url: "https://placehold.co/800x600/222c26/a3e635?text=Hidro", legenda: "Aula de hidroginástica" }
-        ],
-        modalidades: ["Musculação", "Natação", "Hidroginástica"],
-        infraestrutura: ["Piscina", "Vestiário", "Chuveiro quente", "Acessibilidade", "Armários"],
-        horarios: horariosSemana(["06:00", "22:00"], ["07:00", "14:00"], FECHADO),
-        planos: [
-            { tipo: 'mensal', valor: 79.90, beneficios: ["Musculação + Piscina"], modalidades_cobertas: ["Musculação", "Natação"] },
-            { tipo: 'trimestral', valor: 219.90, beneficios: ["Musculação + Piscina", "1 aula experimental de hidro"], modalidades_cobertas: ["Musculação", "Natação", "Hidroginástica"] }
-        ],
-        avaliacoes: [
-            { aluno: "Renato Campos", nota: 4, comentario: "Piscina ótima.", data: "2026-09-01T10:00:00Z" },
-            { aluno: "Silvia Neves", nota: 5, comentario: "Água sempre na temperatura certa.", data: "2026-09-25T08:30:00Z" },
-            { aluno: "Otávio Reis", nota: 4, comentario: "Preço justo e equipe atenciosa.", data: "2026-08-14T17:00:00Z" },
-            { aluno: "Helena Duarte", nota: 4, comentario: "Vestiário poderia ser maior.", data: "2026-07-27T13:20:00Z" },
-            { aluno: "Vinícius Melo", nota: 4, comentario: "Ótima para quem quer natação.", data: "2026-07-03T09:00:00Z" }
-        ]
-    },
-    {
-        id: 5,
-        nome: "Studio Pulse",
-        endereco: { rua: "Rua das Paineiras", numero: "S/N", bairro: "Águas Claras", cidade: "Brasília", uf: "DF", cep: "71900000" },
-        latitude: -15.830, longitude: -48.020,
-        telefone: "61955555555",
-        capa: "https://placehold.co/1200x400/222c26/a3e635?text=Studio+Pulse",
-        galeria: [{ url: "https://placehold.co/800x600/222c26/a3e635?text=Studio", legenda: "Studio funcional" }],
-        modalidades: ["Treino Funcional", "Pilates"],
-        infraestrutura: ["Wi-Fi", "Ar-condicionado"],
-        horarios: horariosSemana(["07:00", "20:00"], ["08:00", "12:00"], FECHADO),
-        planos: [{ tipo: 'mensal', valor: 150.00, beneficios: ["Aulas ilimitadas"], modalidades_cobertas: ["Treino Funcional", "Pilates"] }],
-        avaliacoes: [] // academia nova: testa FA-02 (sem avaliações)
-    },
-    {
-        id: 6,
-        nome: "Iron House",
-        endereco: { rua: "QNM 17", numero: "Lote 2", bairro: "Ceilândia Centro", cidade: "Brasília", uf: "DF", cep: "72215170" },
-        latitude: -15.815, longitude: -48.110,
-        telefone: "61944444444",
-        capa: "https://placehold.co/1200x400/222c26/a3e635?text=Iron+House",
-        galeria: [], // sem fotos: testa RN-05 (placeholder AKIFIT)
-        modalidades: ["Musculação Old School"],
-        infraestrutura: ["Bebedouro"],
-        horarios: horariosSemana(["05:30", "22:00"], ["07:00", "16:00"], FECHADO),
-        planos: [{ tipo: 'mensal', valor: 70.00, beneficios: ["Só ferro"], modalidades_cobertas: ["Musculação"] }],
-        avaliacoes: [{ aluno: "Bruno Almeida", nota: 5, comentario: "Academia raiz", data: "2026-08-01T10:00:00Z" }]
-    },
-    {
-        id: 7,
-        nome: "Academia Fantasma",
-        endereco: { rua: "Rua do Ouro", numero: "1", bairro: "Centro", cidade: "Brasília", uf: "DF", cep: "70000000" },
-        latitude: -15.800, longitude: -48.000,
-        telefone: "61900000000",
-        capa: "",
-        galeria: [], modalidades: [], infraestrutura: [], horarios: [], planos: [], avaliacoes: [] // sem plano: viola RN-03 -> tela de erro
-    }
-];
+if (window.Auth) Auth.renderNav('navLinks', 'detalhes');
+
+
+const API_BASE = '';
 
 const iconesInfra = { "Vestiário": "🚪", "Chuveiro": "🚿", "Chuveiro quente": "🚿", "Ar-condicionado": "❄️", "Armários": "🗄️", "Estacionamento": "🚗", "Estacionamento livre": "🚗", "Wi-Fi": "📶", "Bebedouro": "🚰", "Piscina": "🏊", "Acessibilidade": "♿", "Tatame": "🥋" };
 
@@ -185,7 +15,7 @@ let currentImageIndex = 0;
 let lightboxIndex = 0;
 let ultimoFocoAntesLightbox = null;
 
-// "Voltar para Busca": volta no histórico se veio da busca; senão vai direto para ela
+
 document.getElementById('btn-voltar').addEventListener('click', () => {
     const veioDaBusca = document.referrer && document.referrer.includes('inicio.html');
     if (veioDaBusca && window.history.length > 1) window.history.back();
@@ -196,15 +26,12 @@ document.getElementById('btn-erro-voltar').addEventListener('click', () => windo
 
 async function buscarAcademiaPorId(id) {
     if (cacheAcademias.has(id)) return cacheAcademias.get(id);
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const academia = /^\d+$/.test(id) ? BANCO_SIMULADO.find(a => a.id === Number(id)) : null;
-            if (academia) {
-                cacheAcademias.set(id, academia);
-                resolve(academia);
-            } else reject("Academia não encontrada");
-        }, 300);
-    });
+    if (!/^[1-9]\d*$/.test(id)) throw new Error('ID inválido');
+    const resp = await fetch(`${API_BASE}/api/academias/${encodeURIComponent(id)}`, { headers: { 'Accept': 'application/json' } });
+    if (!resp.ok) throw new Error('Academia não encontrada');
+    const academia = await resp.json();
+    cacheAcademias.set(id, academia);
+    return academia;
 }
 
 function mostrarErro() {
@@ -262,7 +89,6 @@ function textoAvaliacoes(qtd) {
 }
 
 function gerarEstrelas(nota) {
-    // Estrela cheia, meia estrela (preenchida pela metade) ou vazia
     let html = '';
     for (let i = 1; i <= 5; i++) {
         if (nota >= i) html += '<span class="star full">★</span>';
@@ -340,7 +166,7 @@ function setupGaleria(galeria) {
     const indicadores = document.getElementById('carrossel-indicadores');
     
     if (!galeria || galeria.length === 0) {
-        container.innerHTML = `<div class="galeria-placeholder">⚡ AKIFIT<br>Sem imagens cadastradas</div>`;
+        container.innerHTML = `<div class="galeria-placeholder">AKIFIT<br>Sem imagens cadastradas</div>`;
         indicadores.innerHTML = '';
         return;
     }
@@ -362,7 +188,7 @@ function setupGaleria(galeria) {
         img.alt = galeria[i].legenda;
         img.loading = 'lazy';
         img.decoding = 'async';
-        img.width = 800;  // evita layout shift (RNF-01)
+        img.width = 800;  
         img.height = 600;
         img.onerror = function() {
             this.onerror = null;
@@ -422,7 +248,7 @@ function renderizarPlanos(planos, telefone) {
 
     const pMensal = planos.find(p => p.tipo === 'mensal');
 
-    // FA-01: um painel para CADA aba; se a academia não oferece o plano, mostra aviso amigável
+ 
     TIPOS.forEach(tipo => {
         const p = planos.find(x => x.tipo === tipo);
         const panel = document.createElement('div');
@@ -463,7 +289,6 @@ function renderizarPlanos(planos, telefone) {
         `;
         container.appendChild(panel);
 
-        // Tabela comparativa (RN-01: valor + periodicidade explícitos)
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><strong>${rotulo(tipo)}</strong></td>
@@ -480,7 +305,7 @@ function renderizarPlanos(planos, telefone) {
             const isAtivo = b.dataset.alvo === alvo;
             b.classList.toggle('ativo', isAtivo);
             b.setAttribute('aria-selected', String(isAtivo));
-            b.tabIndex = isAtivo ? 0 : -1; // roving tabindex (padrão WAI-ARIA)
+            b.tabIndex = isAtivo ? 0 : -1; 
             if (isAtivo && focar) b.focus();
         });
         document.querySelectorAll('.tab-panel').forEach(p => {
@@ -499,7 +324,7 @@ function renderizarPlanos(planos, telefone) {
         else if (e.key === 'End') novo = abasBtns.length - 1;
         if (novo >= 0) {
             e.preventDefault();
-            e.stopPropagation(); // não deixa a seta mexer na galeria
+            e.stopPropagation();
             ativarAba(abasBtns[novo].dataset.alvo, true);
         }
     });
@@ -673,7 +498,6 @@ document.addEventListener('keydown', (e) => {
         return;
     }
 
-    // Setas só controlam o carrossel quando o foco está nele ou na página (nunca em abas, campos ou botões)
     const alvo = e.target;
     const foraDoCarrossel = alvo !== document.body && !alvo.closest('#carrossel-container');
     if (foraDoCarrossel || currentGallery.length === 0) return;
