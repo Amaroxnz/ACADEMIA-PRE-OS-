@@ -24,9 +24,21 @@ document.getElementById('btn-erro-voltar').addEventListener('click', () => windo
 async function buscarAcademiaPorId(id) {
     if (cacheAcademias.has(id)) return cacheAcademias.get(id);
     if (!/^[1-9]\d*$/.test(id)) throw new Error('ID inválido');
-    const resp = await fetch(`${API_BASE}/api/academias/${encodeURIComponent(id)}`, { headers: { 'Accept': 'application/json' } });
-    if (!resp.ok) throw new Error('Academia não encontrada');
-    const academia = await resp.json();
+
+    let academia = null;
+
+    // 1) Tenta a API real, se API_BASE estiver configurado (ex.: 'http://localhost:3000')
+    if (API_BASE) {
+        try {
+            const resp = await fetch(`${API_BASE}/api/academias/${encodeURIComponent(id)}`, { headers: { 'Accept': 'application/json' } });
+            if (resp.ok) academia = await resp.json();
+        } catch (e) { /* sem back-end: usa a base local */ }
+    }
+
+    // 2) Fallback: base local (shared/academias-data.js)
+    if (!academia && window.AcademiasData) academia = window.AcademiasData.porId(id);
+
+    if (!academia) throw new Error('Academia não encontrada');
     cacheAcademias.set(id, academia);
     return academia;
 }
@@ -261,7 +273,7 @@ function renderizarPlanos(planos, telefone) {
             return;
         }
 
-        const wpLink = `https://wa.me/55${telefone}?text=${encodeURIComponent('Olá! Tenho interesse no plano ' + tipo + ' da academia.')}`;
+        const wpLink = `https://wa.me/55${String(telefone || '').replace(/\D/g, '')}?text=${encodeURIComponent('Olá! Tenho interesse no plano ' + tipo + ' da academia.')}`;
         const eqMensal = p.valor / MESES[tipo];
         let economia = 0;
         if (pMensal && tipo !== 'mensal') economia = Math.round(100 - (eqMensal / pMensal.valor) * 100);
