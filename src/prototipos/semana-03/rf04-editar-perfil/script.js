@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Página protegida: só para usuários logados
+
     if (!Auth.requireAuth()) return;
     Auth.renderNav('navLinks', 'perfil');
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const LIMITE_TAMANHO_FOTO = 5 * 1024 * 1024;
     let fotoAtual = '';
 
-    // Preenche o formulário com os dados salvos
+
     const user = Auth.getUser();
     inputNome.value = user.nome || '';
     inputEmail.value = user.email || '';
@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.value = v;
     });
 
-    // Reduz a foto para caber no localStorage
     function redimensionar(dataUrl, max = 240) {
         return new Promise(resolve => {
             const img = new Image();
@@ -118,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // CEP usado na tela de detalhes da academia (cálculo de distância)
         try { localStorage.setItem('akifit_cep', inputCep.value); } catch (e) {}
 
         Auth.renderNav('navLinks', 'perfil');
