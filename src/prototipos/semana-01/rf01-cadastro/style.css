@@ -340,7 +340,7 @@ body {
   }
 }
 
-/* Estado de carregamento/desabilitado dos botões */
+
 .btn-primary:disabled,
 .btn-google:disabled {
   opacity: 0.7;
