@@ -12,7 +12,7 @@ const feedbackMessage = document.getElementById('feedback-message');
 const btnVoltar = document.getElementById('btn-voltar');
 const btnSubmit = document.getElementById('btn-submit');
 
-// Validação visual de e-mail ao digitar
+
 emailInput.addEventListener('input', function() {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (this.value.length > 0 && !emailPattern.test(this.value)) {
@@ -22,12 +22,12 @@ emailInput.addEventListener('input', function() {
   }
 });
 
-// Remove borda vermelha ao digitar a senha
+
 passwordInput.addEventListener('input', function() {
   this.classList.remove('invalid-input');
 });
 
-// Exibir tela de feedback (Sucesso ou Erro)
+
 function showFeedback(sucesso) {
   formContent.classList.add('hidden');
   feedbackScreen.classList.remove('hidden');
@@ -36,14 +36,14 @@ function showFeedback(sucesso) {
     feedbackIcon.innerHTML = '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Login realizado!';
     feedbackMessage.textContent = 'Autenticação concluída com sucesso. Redirecionando...';
-    btnVoltar.classList.add('hidden'); // Oculta botão voltar em caso de sucesso
+    btnVoltar.classList.add('hidden'); 
   } else {
     feedbackIcon.innerHTML = '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
     feedbackTitle.textContent = 'Acesso Negado';
     feedbackMessage.textContent = 'E-mail ou senha incorretos. Verifique os dados e tente novamente.';
     btnVoltar.classList.remove('hidden');
     
-    // Regra FA-04: Limpa o campo de senha por segurança em caso de erro
+   
     passwordInput.value = '';
     passwordInput.type = 'password';
     document.getElementById('togglePassword').innerHTML = '<i data-lucide="eye-off"></i>';
@@ -51,19 +51,19 @@ function showFeedback(sucesso) {
   lucide.createIcons();
 }
 
-// Botão de voltar na tela de erro
+
 btnVoltar.addEventListener('click', () => {
   feedbackScreen.classList.add('hidden');
   formContent.classList.remove('hidden');
 });
 
-// Envio do Formulário (Login)
+
 form.addEventListener('submit', async function(event) {
   event.preventDefault();
 
   let hasError = false;
 
-  // Força borda vermelha se campos estiverem vazios
+  
   if (!emailInput.value) {
     emailInput.classList.add('invalid-input');
     hasError = true;
@@ -75,7 +75,7 @@ form.addEventListener('submit', async function(event) {
 
   const invalidInputs = document.querySelectorAll('.invalid-input');
   if (invalidInputs.length > 0 || hasError) {
-    return; // Para aqui se tiver erro estrutural (sem mostrar a tela de feedback)
+    return; 
   }
 
   btnSubmit.textContent = 'Autenticando...';
@@ -97,7 +97,7 @@ form.addEventListener('submit', async function(event) {
   }
 });
 
-// Mostrar/Ocultar Senha
+
 function setupTogglePassword(toggleId, inputId) {
   const toggleBtn = document.getElementById(toggleId);
   const input = document.getElementById(inputId);
@@ -112,7 +112,7 @@ function setupTogglePassword(toggleId, inputId) {
 
 setupTogglePassword('togglePassword', 'password');
 
-// Login simulado via Google (fluxo apenas front-end, sem OAuth real)
+
 const btnGoogle = document.getElementById('btn-google');
 const btnGoogleText = document.getElementById('btn-google-text');
 
@@ -133,9 +133,9 @@ btnGoogle.addEventListener('click', async function () {
   }
 });
 
-// Já está logado? Vai direto para a página inicial.
+
 if (Auth.getUser()) Auth.go('inicio');
 
-// Se veio do cadastro/redefinição, preenche o e-mail
+
 const emailParam = new URLSearchParams(location.search).get('email');
 if (emailParam) emailInput.value = emailParam;
