@@ -1,11 +1,9 @@
-/* AKIFIT - módulo compartilhado de autenticação (front-end, localStorage).
-   Em produção, troque estas funções por chamadas à API/back-end. */
 (function () {
   const KEY_USERS = 'akifit_usuarios';
   const KEY_SESSION = 'akifit_sessao';
   const KEY_RESET = 'akifit_reset_tokens';
 
-  // Raiz de /prototipos/ calculada a partir do próprio caminho deste script
+  
   const src = (document.currentScript && document.currentScript.src) || '';
   const ROOT = src.replace(/shared\/auth\.js.*$/, '');
 
@@ -60,7 +58,7 @@
       return { ok: true, user: u };
     },
 
-    // Simulação de login/cadastro com Google (sem OAuth real)
+  
     async loginGoogle() {
       const email = 'usuario.google@gmail.com';
       let u = users().find(x => x.email === email);
@@ -87,7 +85,7 @@
       return true;
     },
 
-    // Recuperação de senha (o "e-mail" é simulado: o token fica no localStorage)
+   
     solicitarReset(email) {
       email = norm(email);
       const u = users().find(x => x.email === email);
@@ -112,7 +110,6 @@
       return true;
     },
 
-    // Monta os links do menu conforme o estado de login
     renderNav(containerId, ativo) {
       const el = document.getElementById(containerId);
       if (!el) return;
