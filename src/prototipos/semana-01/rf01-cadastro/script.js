@@ -132,7 +132,6 @@ function setupTogglePassword(toggleId, inputId) {
 setupTogglePassword('togglePassword', 'password');
 setupTogglePassword('toggleConfirmPassword', 'confirm-password');
 
-// Cadastro simulado via Google (fluxo apenas front-end, sem OAuth real)
 const btnGoogle = document.getElementById('btn-google');
 const btnGoogleText = document.getElementById('btn-google-text');
 
@@ -141,7 +140,7 @@ btnGoogle.addEventListener('click', async function () {
   btnGoogleText.textContent = 'Conectando com o Google...';
 
   try {
-    await Auth.loginGoogle(); // cria a conta (se não existir) e inicia a sessão
+    await Auth.loginGoogle(); 
     showFeedback(true);
     feedbackMessage.textContent = 'Conta criada com o Google. Redirecionando...';
     btnVoltar.classList.add('hidden');
