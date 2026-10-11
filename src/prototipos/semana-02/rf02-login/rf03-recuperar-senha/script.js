@@ -21,7 +21,7 @@ emailInput.addEventListener('input', function () {
   }
 });
 
-// Exibir tela de feedback (Sucesso ou Erro)
+
 function showFeedback(sucesso) {
   formContent.classList.add('hidden');
   feedbackScreen.classList.remove('hidden');
@@ -40,13 +40,13 @@ function showFeedback(sucesso) {
   lucide.createIcons();
 }
 
-// Botão de tentar novamente na tela de erro
+
 btnVoltar.addEventListener('click', () => {
   feedbackScreen.classList.add('hidden');
   formContent.classList.remove('hidden');
 });
 
-// Envio do formulário (Recuperação de senha)
+
 form.addEventListener('submit', async function (event) {
   event.preventDefault();
 
@@ -60,11 +60,11 @@ form.addEventListener('submit', async function (event) {
   btnSubmit.disabled = true;
 
   try {
-    // Gera o token de redefinição (o envio do e-mail é simulado)
+ 
     const token = Auth.solicitarReset(emailInput.value);
 
     showFeedback(true);
-    // Resposta genérica por segurança; o link simulado só aparece se o e-mail existe
+ 
     const linkReset = document.getElementById('link-reset');
     if (token) {
       linkReset.href = Auth.URLS.redefinir + '?token=' + encodeURIComponent(token);
