@@ -1,4 +1,4 @@
-lucide.createIcons();
+if (window.lucide) lucide.createIcons();
 
 const token = new URLSearchParams(location.search).get('token') || '';
 const formContent = document.getElementById('form-content');
@@ -14,7 +14,7 @@ function mostrar(ok, t, m) {
     ? '<i data-lucide="check-circle" style="color: #A3E635; width: 64px; height: 64px;"></i>'
     : '<i data-lucide="x-circle" style="color: #EF4444; width: 64px; height: 64px;"></i>';
   titulo.textContent = t; msg.textContent = m;
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 if (!Auth.tokenValido(token)) {

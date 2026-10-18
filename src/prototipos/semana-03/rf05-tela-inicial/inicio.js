@@ -98,8 +98,10 @@ function renderizarAcademias(lista) {
                 </div>
                 <p class="card-price">R$ ${academia.preco.toFixed(2).replace('.', ',')}<span style="font-size:12px; color:#9ca3af; font-weight:normal;">/mês</span></p>
                 <a href="../../semana-06/rf05-detalhes-da-academia/RF-05.html?id=${academia.id}" class="btn-outline">Ver Detalhes</a>
+                <button type="button" class="btn-comparar">+ Adicionar à Comparação</button>
             </div>
         `;
+        if (window.Comparacao) Comparacao.ligarBotao(card.querySelector('.btn-comparar'), academia.id);
 
         listaAcademias.appendChild(card);
     });

@@ -1,0 +1,90 @@
+:root {
+    --bg-page: #0b0f0e; --bg-nav: #121816; --border-card: rgba(255,255,255,0.08); --border-input: #222c26;
+    --neon: #a3e635; --neon-hover: #bef264; --neon-glow: rgba(163,230,53,0.4);
+    --text-main: #fff; --text-sec: #d1d5db; --text-muted: #9ca3af; --danger: #f87171;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background: var(--bg-page); color: var(--text-main); min-height: 100vh; line-height: 1.5; }
+.hidden { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.navbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 40px; background: var(--bg-nav); border-bottom: 1px solid var(--border-card); }
+.logo { color: var(--neon); font-size: 24px; font-weight: bold; }
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a { color: var(--text-sec); text-decoration: none; margin-left: 20px; font-weight: 500; transition: color .3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--neon); }
+.nav-user { color: var(--neon); font-weight: bold; margin-left: 20px; font-size: 14px; }
+.nav-logout { margin-left: 12px; background: none; border: 1px solid var(--neon); color: var(--neon); border-radius: 6px; padding: 4px 12px; cursor: pointer; }
+.btn-voltar { background: none; border: none; color: var(--text-sec); cursor: pointer; font-size: 16px; font-weight: bold; }
+.btn-voltar:hover { color: var(--neon); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+.titulo-pagina { margin-bottom: 24px; }
+.titulo-pagina h1 { font-size: 32px; }
+.titulo-pagina p { color: var(--text-muted); margin-top: 4px; }
+
+.btn-neon { display: inline-block; padding: 12px 24px; background: var(--neon); color: var(--bg-page); font-weight: bold; border: none; border-radius: 8px; text-decoration: none; cursor: pointer; text-align: center; transition: .2s; }
+.btn-neon:hover { background: var(--neon-hover); box-shadow: 0 0 10px var(--neon-glow); }
+.btn-outline-pequeno { display: inline-block; padding: 8px 16px; border: 2px solid var(--neon); color: var(--neon); border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 14px; transition: .2s; }
+.btn-outline-pequeno:hover { background: var(--neon); color: var(--bg-page); }
+.btn-texto { background: none; border: none; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-size: 14px; }
+.btn-texto:hover { color: var(--danger); }
+
+.estado-vazio { text-align: center; background: var(--bg-nav); border: 1px solid var(--border-card); border-radius: 12px; padding: 60px 20px; }
+.estado-vazio .icone { font-size: 56px; margin-bottom: 12px; }
+.estado-vazio h2 { margin-bottom: 8px; border: none; padding: 0; }
+.estado-vazio p { color: var(--text-sec); margin-bottom: 24px; }
+
+/* ---------- Matriz ---------- */
+.matriz { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; background: var(--bg-nav); border: 1px solid var(--border-card); border-radius: 12px; }
+.matriz th, .matriz td { padding: 14px 12px; text-align: center; vertical-align: middle; border-bottom: 1px solid var(--border-card); }
+.matriz .col-rotulo { width: 170px; text-align: left; color: var(--text-sec); font-weight: 600; font-size: 14px; background: var(--bg-nav); }
+
+/* Cabeçalho fixo */
+.matriz thead th { position: sticky; top: 0; z-index: 20; background: #151d19; border-bottom: 2px solid var(--neon); vertical-align: top; padding: 16px 12px; }
+.matriz thead th:first-child { border-top-left-radius: 12px; }
+.matriz thead th:last-child { border-top-right-radius: 12px; }
+.cab-capa { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 10px; background: var(--border-input); }
+.cab-nome { font-size: 17px; font-weight: bold; margin-bottom: 4px; word-break: break-word; }
+.cab-nota { color: var(--text-sec); font-size: 14px; margin-bottom: 10px; }
+.cab-nota .estrela { color: var(--neon); }
+.cab-acoes { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
+.btn-detalhes { padding: 9px 10px; background: var(--neon); color: var(--bg-page); font-weight: bold; border-radius: 8px; text-decoration: none; font-size: 14px; }
+.btn-detalhes:hover { background: var(--neon-hover); box-shadow: 0 0 10px var(--neon-glow); }
+.btn-remover { background: none; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer; text-decoration: underline; }
+.btn-remover:hover { color: var(--danger); }
+
+/* Linhas de seção */
+.secao th { text-align: left; background: #0f1512; color: var(--neon); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 10px 12px; }
+.matriz tbody tr:last-child td, .matriz tbody tr:last-child th { border-bottom: none; }
+
+/* Preços */
+.preco-valor { font-size: 18px; font-weight: bold; }
+.preco-eq { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.melhor { background: rgba(163,230,53,.1); box-shadow: inset 0 0 0 2px var(--neon); }
+.melhor .preco-valor { color: var(--neon); }
+.selo-menor { display: inline-block; margin-top: 6px; background: var(--neon); color: var(--bg-page); font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 20px; }
+.sem-plano { color: var(--text-muted); }
+
+/* Marcadores */
+.sim { color: var(--neon); font-size: 22px; font-weight: bold; }
+.nao { color: var(--danger); font-size: 20px; font-weight: bold; }
+
+.legenda { color: var(--text-muted); font-size: 13px; margin-top: 12px; }
+.rodape-acoes { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 720px) {
+    .navbar { padding: 14px 16px; flex-wrap: wrap; }
+    .nav-links a { margin-left: 10px; font-size: 14px; }
+    .container { padding: 20px 8px 50px; }
+    .matriz .col-rotulo { width: 84px; font-size: 12px; }
+    .matriz th, .matriz td { padding: 10px 4px; }
+    .cab-capa { height: 70px; }
+    .cab-nome { font-size: 13px; }
+    .cab-nota { font-size: 12px; }
+    .preco-valor { font-size: 14px; }
+    .preco-valor small { display: block; }
+    .preco-eq { font-size: 11px; }
+    .btn-detalhes { font-size: 12px; padding: 7px 4px; }
+    .selo-menor { font-size: 9px; padding: 1px 5px; }
+}

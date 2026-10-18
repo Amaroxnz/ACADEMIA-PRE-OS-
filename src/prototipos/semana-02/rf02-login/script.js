@@ -1,4 +1,4 @@
-lucide.createIcons();
+if (window.lucide) lucide.createIcons();
 
 const form = document.getElementById('loginForm');
 const emailInput = document.getElementById('email');
@@ -48,7 +48,7 @@ function showFeedback(sucesso) {
     passwordInput.type = 'password';
     document.getElementById('togglePassword').innerHTML = '<i data-lucide="eye-off"></i>';
   }
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 
@@ -106,7 +106,7 @@ function setupTogglePassword(toggleId, inputId) {
     const isPassword = input.type === 'password';
     input.type = isPassword ? 'text' : 'password';
     toggleBtn.innerHTML = `<i data-lucide="${isPassword ? 'eye' : 'eye-off'}"></i>`;
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
   });
 }
 

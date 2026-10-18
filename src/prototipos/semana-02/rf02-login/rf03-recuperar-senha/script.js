@@ -1,4 +1,4 @@
-lucide.createIcons();
+if (window.lucide) lucide.createIcons();
 
 const form = document.getElementById('recuperarForm');
 const emailInput = document.getElementById('email');
@@ -37,7 +37,7 @@ function showFeedback(sucesso) {
     feedbackMessage.textContent = 'Ocorreu um erro ao tentar enviar o link de recuperação. Verifique o e-mail informado e tente novamente.';
     btnVoltar.classList.remove('hidden');
   }
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 

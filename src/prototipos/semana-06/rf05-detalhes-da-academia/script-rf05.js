@@ -542,6 +542,7 @@ async function init() {
         renderizarHorarios(academia.horarios);
         renderizarAvaliacoes(academia.avaliacoes, media);
         carregarFavorito(academia.id);
+        if (window.Comparacao) Comparacao.ligarBotao(document.getElementById('btn-comparar'), academia.id);
         
         document.getElementById('skeleton').classList.add('hidden');
         document.getElementById('conteudo-principal').classList.remove('hidden');

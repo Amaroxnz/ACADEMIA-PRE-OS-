@@ -1,4 +1,4 @@
-lucide.createIcons();
+if (window.lucide) lucide.createIcons();
 
 const form = document.getElementById('cadastroForm');
 const emailInput = document.getElementById('email');
@@ -67,7 +67,7 @@ function showFeedback(sucesso, msgErro) {
     feedbackTitle.textContent = 'Erro no cadastro';
     feedbackMessage.textContent = msgErro || 'Ocorreu um erro ao tentar criar sua conta. Verifique os dados e tente novamente.';
   }
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 btnVoltar.addEventListener('click', () => {
@@ -125,7 +125,7 @@ function setupTogglePassword(toggleId, inputId) {
     const isPassword = input.type === 'password';
     input.type = isPassword ? 'text' : 'password';
     toggleBtn.innerHTML = `<i data-lucide="${isPassword ? 'eye' : 'eye-off'}"></i>`;
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
   });
 }
 

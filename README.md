@@ -6,7 +6,9 @@ Abra a pasta no VS Code com a extensão **Live Server** e abra o `index.html` da
 Funciona também com `python3 -m http.server` na raiz do projeto.
 
 ## Fluxo
-Cadastro → Login → Início/Busca → Detalhes da academia → Meu Perfil (e Sair).
+Cadastro → Login → Início/Busca → Detalhes da academia → Comparar academias → Meu Perfil (e Sair).
+
+- **Comparação:** "Adicionar à Comparação" na busca e nos detalhes (mín. 2, máx. 3). A matriz fica em `semana-07/rf06-comparar/comparar.html`; o estado fica em `shared/comparacao.js` e os dados em `shared/academias-data.js`.
 
 - Os dados (usuários, sessão, perfil, favoritos) ficam no `localStorage` do navegador.
 - `src/prototipos/shared/auth.js` concentra cadastro, login, sessão e recuperação de senha.

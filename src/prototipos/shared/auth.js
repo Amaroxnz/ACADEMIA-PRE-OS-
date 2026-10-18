@@ -14,6 +14,7 @@
     redefinir: ROOT + 'semana-02/rf02-login/rf03-recuperar-senha/redefinir.html',
     inicio: ROOT + 'semana-03/rf05-tela-inicial/inicio.html',
     perfil: ROOT + 'semana-03/rf04-editar-perfil/index.html',
+    comparar: ROOT + 'semana-07/rf06-comparar/comparar.html',
   };
 
   const read = (k, def) => { try { return JSON.parse(localStorage.getItem(k)) ?? def; } catch (e) { return def; } };
@@ -113,10 +114,12 @@
     renderNav(containerId, ativo) {
       const el = document.getElementById(containerId);
       if (!el) return;
+      this._nav = [containerId, ativo];
       const u = this.getUser();
+      const qtd = (read('akifit_comparacao', []) || []).length;
       const a = (nome, txt) => `<a href="${URLS[nome]}"${ativo === nome ? ' class="active"' : ''}>${txt}</a>`;
       el.innerHTML = a('inicio', 'Início/Busca') +
-        (u ? a('perfil', 'Meu Perfil') +
+        (u ? a('comparar', 'Comparar' + (qtd ? ` <span class="nav-count">${qtd}</span>` : '')) + a('perfil', 'Meu Perfil') +
              `<span class="nav-user">Olá, ${u.nome.split(' ')[0].replace(/[<>&"]/g, '')}</span>
               <button type="button" class="nav-logout" id="btnSair">Sair</button>`
            : a('login', 'Login') + a('cadastro', 'Cadastro'));

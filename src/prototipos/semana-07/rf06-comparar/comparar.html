@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparar Academias - AKIFIT</title>
+    <link rel="stylesheet" href="style-comparar.css">
+</head>
+<body data-sem-barra>
+    <header class="navbar">
+        <button id="btn-voltar" class="btn-voltar">← Voltar para Busca</button>
+        <div class="logo">AKIFIT</div>
+        <div class="nav-links" id="navLinks"></div>
+    </header>
+
+    <main class="container">
+        <div class="titulo-pagina">
+            <h1>Comparar academias</h1>
+            <p id="subtitulo">Compare preços, modalidades e infraestrutura lado a lado.</p>
+        </div>
+
+        <div id="estado-vazio" class="estado-vazio hidden">
+            <div class="icone">⚖️</div>
+            <h2 id="vazio-titulo">Selecione pelo menos 2 academias</h2>
+            <p id="vazio-texto">Na busca, clique em “Adicionar à Comparação” em duas ou três academias (máximo 3).</p>
+            <a id="link-busca" class="btn-neon" href="#">Ir para a busca</a>
+        </div>
+
+        <div id="area-comparacao" class="hidden">
+            <table class="matriz" id="matriz">
+                <caption class="sr-only">Comparação entre as academias selecionadas</caption>
+                <thead><tr id="linha-cabecalho"></tr></thead>
+                <tbody id="corpo-matriz"></tbody>
+            </table>
+
+            <div class="rodape-acoes">
+                <a id="link-add-mais" class="btn-outline-pequeno" href="#">+ Adicionar outra academia</a>
+                <button id="btn-limpar" class="btn-texto" type="button">Limpar comparação</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../shared/auth.js"></script>
+    <script src="../../shared/academias-data.js"></script>
+    <script src="../../shared/comparacao.js"></script>
+    <script src="script-comparar.js"></script>
+</body>
+</html>
