@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Favoritos - AKIFIT</title>
+    <link rel="stylesheet" href="style-favoritos.css">
+</head>
+<body>
+    <a class="pular-conteudo" href="#principal">Pular para o conteúdo</a>
+
+    <header class="navbar">
+        <button type="button" id="btn-voltar" class="btn-voltar">← Voltar para Busca</button>
+        <div class="logo">AKIFIT</div>
+        <nav class="nav-links" id="navLinks" aria-label="Menu principal"></nav>
+    </header>
+
+    <main id="principal" class="container" tabindex="-1" aria-busy="true">
+        <div class="titulo-pagina">
+            <h1>Meus Favoritos</h1>
+            <p id="contagem" class="subtitulo" aria-live="polite">Suas academias salvas, sempre à mão.</p>
+        </div>
+
+        <section id="carregando" class="grade" aria-label="Carregando favoritos">
+            <div class="esqueleto pulse"></div>
+            <div class="esqueleto pulse"></div>
+            <div class="esqueleto pulse"></div>
+        </section>
+
+        <section id="erro" class="estado hidden" role="alert">
+            <div class="estado-icone" aria-hidden="true">⚠️</div>
+            <h2 id="erro-texto"></h2>
+            <button type="button" id="btn-tentar" class="btn-neon">Tentar novamente</button>
+        </section>
+
+        <section id="vazio" class="estado hidden">
+            <div class="estado-icone" aria-hidden="true">♡</div>
+            <h2 id="vazio-titulo" tabindex="-1"></h2>
+            <p>Toque no coração de uma academia para salvá-la aqui.</p>
+            <a id="btn-explorar" class="btn-neon" href="#">Explorar Academias</a>
+        </section>
+
+        <section id="conteudo" class="hidden" aria-label="Academias favoritas">
+            <ul id="grade" class="grade" role="list"></ul>
+        </section>
+    </main>
+
+    <script src="../../shared/config.js"></script>
+    <script src="../../shared/auth.js"></script>
+    <script src="../../shared/academias-data.js"></script>
+    <script src="../../shared/comparacao.js"></script>
+    <script src="../../shared/favoritos.js"></script>
+    <script src="script-favoritos.js"></script>
+</body>
+</html>
