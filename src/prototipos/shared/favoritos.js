@@ -31,7 +31,13 @@
   };
 
   const urlSegura = (url) => (typeof url === 'string' && /^(https?:\/\/|data:image\/)/i.test(url) ? url : '');
-
+  
+  const normalizarHorarios = (lista) => {
+    if (!Array.isArray(lista)) return [];
+    return lista
+      .filter((h) => h && Number.isInteger(h.dia) && /^\d{2}:\d{2}$/.test(h.abre) && /^\d{2}:\d{2}$/.test(h.fecha))
+      .map((h) => ({ dia: h.dia, abre: h.abre, fecha: h.fecha }));
+  };
   class ErroFavoritos extends Error {
     constructor(status) {
       super('favoritos');
